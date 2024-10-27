@@ -63,8 +63,8 @@ export const products = [
     subcategory: 'clothing',
     sizes: ['S', 'M'],
     date: '2024-09-10',
-    latestcollection: false,
-    bestseller: false,
+    latestcollection: true,
+    bestseller: true,
   },
   {
     id: 4,
@@ -115,7 +115,7 @@ export const products = [
     subcategory: 'furniture',
     sizes: ['L'],
     date: '2024-08-12',
-    latestcollection: false,
+    latestcollection: true,
     bestseller: true,
   },
   {
@@ -155,7 +155,7 @@ export const products = [
     sizes: ['S'],
     date: '2024-07-10',
     latestcollection: false,
-    bestseller: false,
+    bestseller: true,
   },
   {
     id: 11,
