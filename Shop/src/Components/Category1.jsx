@@ -53,7 +53,7 @@ const Category1 = () => {
           </div>
 
           {/* THIRD COLUMN */}
-          <div className='col-span-1 lg:col-span-2 bg-gradient-to-br from-primary to-primary/90 py-10 px-5 text-white rounded-3xl relative h-[400px] flex items-end'>
+          <div className='col-span-1 sm:col-span-2 lg:col-span-2 bg-gradient-to-br from-primary to-primary/90 py-10 px-5 text-white rounded-3xl relative h-[400px] flex items-end'>
             <div className='flex flex-col justify-between w-full'>
               {/* Text and Button on the Left */}
               <div className='mb-8'>
@@ -68,7 +68,7 @@ const Category1 = () => {
               <img 
                 src={image3} 
                 alt="" 
-                className='w-[250px] sm:w-[320px] absolute right-0 bottom-10 sm:-bottom-14 sm:right-16 sm: lg:top-10 sm:-translate-y-1/2'
+                className='w-[250px] sm:w-[320px] absolute right-10 bottom-20 lg:top-10 '
               />
             </div>
           </div>

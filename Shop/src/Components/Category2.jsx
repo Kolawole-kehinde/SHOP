@@ -41,7 +41,7 @@ const Category2 = () => {
           </div>
 
           {/* THIRD COLUMN */}
-          <div className='col-span-1 lg:col-span-1 bg-gradient-to-br from-brandBlue/90 to-brandBlue/90 py-10 pl-5 text-white rounded-3xl relative h-[400px] flex items-end'>
+          <div className='col-span-1 sm:col-span-2 lg:col-span-1 bg-gradient-to-br from-brandBlue/90 to-brandBlue/90 py-10 pl-5 text-white rounded-3xl relative h-[400px] flex items-end'>
             <div className=''>
               <div className='mb-4'>
                 <p className='mb-1 text-white'>Enjoy</p>

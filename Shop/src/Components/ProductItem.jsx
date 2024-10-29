@@ -10,7 +10,7 @@ const ProductItem = ({ id, image, description, price }) => {
       to={`/product/${id}`} 
       className='text-gray-700 dark:text-gray-100 cursor-pointer'
     >
-      <div className='overflow-hidden bg-gray-200 dark:bg-gray-700 p-4  w-full h-[250px] flex justify-center items-center rounded-md'>
+      <div className='overflow-hidden bg-gray-100 dark:bg-gray-800 p-4  w-full h-[250px] flex justify-center items-center rounded-md'>
         <img 
           src={image} 
           alt={name} 

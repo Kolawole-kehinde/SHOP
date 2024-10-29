@@ -1,8 +1,8 @@
 import React from 'react'
-import shipping from '../assets/shipping.jpg'
-import moneyback from '../assets/moneyback.jpg'
-import payment from '../assets/payment.jpg'
-import support from '../assets/support.jpg'
+import shipping from '../assets/shipping.png'
+import moneyback from '../assets/moneyback.png'
+import payment from '../assets/payment.png'
+import support from '../assets/support.png'
 
 
 const OurPolicy = () => {
