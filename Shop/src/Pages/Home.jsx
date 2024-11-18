@@ -8,7 +8,7 @@ import BestSellers from '../Components/BestSellers'
 import Banner2 from '../Components/Banner2'
 import OurPolicy from '../Components/OurPolicy'
 import Subscribe from '../Components/Subscribe'
-import Footer from '../Components/Footer'
+
 
 const Home = () => {
   return (
@@ -22,7 +22,7 @@ const Home = () => {
       <BestSellers/>
       <Banner2/>
       <Subscribe/>
-      <Footer/>
+
     </div>
   )
 }
