@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { shopContext } from '../Components/Contex/ShopContext';
+import RelatedProducts from '../Components/RelatedProducts';
 
 const ProductPage = () => {
   const { productId } = useParams();
@@ -81,6 +82,9 @@ const ProductPage = () => {
           </p>
         </div>
       </div>
+
+    {/* ................Display Related Products...................... */}
+            <RelatedProducts/>
     </div>
   );
 };
