@@ -22,6 +22,7 @@ const Home = () => {
       <BestSellers/>
       <Banner2/>
       <Subscribe/>
+     
 
     </div>
   )

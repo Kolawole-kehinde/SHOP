@@ -7,12 +7,12 @@ import Shop from './Pages/Shop'
 import About from './Pages/About'
 import Contact from './Pages/Contact'
 import Cart from './Pages/Cart'
-import Login from './Pages/Login'
 import PlaceOrader from './Pages/PlaceOrader'
 import Orders from './Pages/Orders'
 import Footer from './Components/Footer'
 import SearchBar from './Components/SearchBar'
 import ProductPage from './Pages/ProductPage'
+import LoginPage from './Pages/Auth/Login'
 
 const App = () => {
   return (
@@ -28,7 +28,7 @@ const App = () => {
          <Route path='/contact' element={<Contact/>}/>
          <Route path='/product/:productId' element={<ProductPage/>}/>
          <Route path='/cart' element={<Cart/>}/>
-         <Route path='/login' element={<Login/>}/>
+         <Route path='/login' element={<LoginPage/>}/>
          <Route path='/place-order' element={<PlaceOrader/>}/>
          <Route path='/orders' element={<Orders/>}/>
      </Routes> 

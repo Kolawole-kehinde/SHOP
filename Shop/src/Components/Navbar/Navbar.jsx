@@ -59,7 +59,10 @@ const Navbar = () => {
 
           {/* Profile Icon */}
           <div className='group relative z-50'>
-            <CiUser className='text-xl cursor-pointer' />
+             <Link to={`Login`}>
+             <CiUser className='text-xl cursor-pointer' />
+             </Link>
+            
             <div className='hidden group-hover:block absolute right-0 pt-4'>
               <div className='flex flex-col gap-2 w-36 py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded shadow-lg z-50'>
                 <p className='cursor-pointer hover:text-black dark:hover:text-white text-center'>My Profile</p>
