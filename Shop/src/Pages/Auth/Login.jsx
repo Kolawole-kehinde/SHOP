@@ -1,9 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "../../utils/Schema/authSchema";
 import { loginLists } from "../../constant/auth";
 import { Link } from "react-router-dom";
-import { loginSchema } from "../../utils/Schema/authSchema";
+import CustomInput from "../../Components/CustomInput";
 
 const LoginPage = () => {
   const {
@@ -12,7 +13,7 @@ const LoginPage = () => {
     formState: { errors },
     reset,
   } = useForm({
-    resolver: zodResolver(loginSchema), 
+    resolver: zodResolver(loginSchema),
   });
 
   const onSubmit = (data) => {
@@ -27,27 +28,20 @@ const LoginPage = () => {
           Login to Your Account
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {loginLists?.map((field) => (
-            <div key={field.name}>
-              <label className="block text-sm font-medium text-gray-700">
-                {field.label}
-              </label>
-              <input
-                type={field.type}
-                {...register(field.name)}
-                className="w-full p-3 mt-1 border border-gray-300 rounded-lg outline-none"
-                placeholder={field.placeholder}
-              />
-              {errors[field.name] && (
-                <span className="text-red-500 text-sm">
-                  {errors[field.name]?.message}
-                </span>
-              )}
-            </div>
+          {loginLists.map((field) => (
+            <CustomInput
+              key={field.name}
+              label={field.label}
+              type={field.type}
+              name={field.name}
+              placeholder={field.placeholder}
+              register={register}
+              error={errors[field.name]}
+            />
           ))}
           <button
             type="submit"
-            className="w-full px-4 py-3 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 outline-none"
+            className="w-full px-4 py-3 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
           >
             Login
           </button>
