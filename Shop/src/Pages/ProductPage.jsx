@@ -84,7 +84,7 @@ const ProductPage = () => {
       </div>
 
     {/* ................Display Related Products...................... */}
-            <RelatedProducts/>
+            <RelatedProducts category={productData.category} subCategory={productData.subCategory}/>
     </div>
   );
 };

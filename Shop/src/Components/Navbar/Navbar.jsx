@@ -52,7 +52,7 @@ const Navbar = () => {
           {/* Search Bar Section */}
           <div className='relative group'>
             <CiSearch 
-              onClick={() => navigate("/shop")}
+              onClick={() => navigate("shop")}
               className='text-2xl text-gray-600 dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-300'
             />
           </div>
