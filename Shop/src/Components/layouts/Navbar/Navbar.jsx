@@ -13,34 +13,57 @@ const NavBar = () => {
   const { setShowSearch } = useContext(shopContext);
   const navigate = useNavigate();
 
+  const active =(isActive) => {
+    return isActive ? "text-yellow-500" : "text-gray-500";
+  }
+
   return (
     <div className=' bg-white dark:bg-gray-900 py-4 dark:text-white duration-200 relative z-40'>
       <div className='container flex justify-between items-center'>
 
         {/* Logo Section */}
         <div className='flex items-center gap-4'>
-          <a href="/" className='text-2xl sm:text-3xl text-red-600 -tracking-widest'>EShop</a>
+          <NavLink to="/" className='text-2xl sm:text-3xl text-red-600 -tracking-widest'>EShop</NavLink>
         </div>
 
         {/* Navbar Links for large screens */}
         <ul className="hidden lg:flex items-center gap-4 uppercase">
           <li>
-            <NavLink to='/' className='inline-block px-4 font-semibold text-gray-500 hover:text-black dark:hover:text-white duration-200'>
-              Home
-            </NavLink>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `inline-block px-4 font-semibold  duration-200 ${
+                isActive ? "text-red-500" : "text-gray-500"
+              }`
+            }
+          >
+            Home
+          </NavLink>
           </li>
           <li>
-            <NavLink to='/shop' className='inline-block px-4 font-semibold text-gray-500 hover:text-black dark:hover:text-white duration-200'>
+            <NavLink to='/shop' className={({ isActive }) =>
+              `inline-block px-4 font-semibold  duration-200 ${
+                isActive ? "text-red-500" : "text-gray-500"
+              }`
+            }>
               Shop
             </NavLink>
           </li>
           <li>
-            <NavLink to='/about' className='inline-block px-4 font-semibold text-gray-500 hover:text-black dark:hover:text-white duration-200'>
+            <NavLink to='/about' className={({ isActive }) =>
+              `inline-block px-4 font-semibold  duration-200 ${
+                isActive ? "text-red-500" : "text-gray-500"
+              }`
+            }>
               About
             </NavLink>
           </li>
           <li>
-            <NavLink to='/contact' className='inline-block px-4 font-semibold text-gray-500 hover:text-black dark:hover:text-white duration-200'>
+            <NavLink to='/contact' className={({ isActive }) =>
+              `inline-block px-4 font-semibold  duration-200 ${
+                isActive ? "text-red-500" : "text-gray-500"
+              }`
+            }>
               Contact
             </NavLink>
           </li>
