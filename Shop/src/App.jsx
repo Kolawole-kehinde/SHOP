@@ -1,40 +1,42 @@
-import React from 'react'
-import Navbar from './Components/Navbar/Navbar'
-import Hero from './Components/Hero/Hero'
-import { Route, Routes } from 'react-router-dom'
-import Home from './Pages/Home'
-import Shop from './Pages/Shop'
-import About from './Pages/About'
-import Contact from './Pages/Contact'
-import Cart from './Pages/Cart'
-import PlaceOrader from './Pages/PlaceOrader'
-import Orders from './Pages/Orders'
-import Footer from './Components/Footer'
-import SearchBar from './Components/SearchBar'
-import ProductPage from './Pages/ProductPage'
-import LoginPage from './Pages/Auth/Login'
+import React from "react";
+import Navbar from "./Components/layouts/Navbar/Navbar";
+import { Route, Routes } from "react-router-dom";
+import HomePage from "./Pages/Home";
+import LoginPage from "./Pages/Auth/Login";
+import RegisrationPage from "./Pages/Auth/Registration";
+import Shop from "./Pages/Shop";
+import ContactPage from "./Pages/Contact";
+import AboutPage from "./Pages/About";
+import ProductPage from "./Pages/ProductPage";
+import SearchBar from "./Components/SearchBar";
+import Footer from "./Components/layouts/Footer";
+import NavBar from "./Components/layouts/Navbar/Navbar";
 
 const App = () => {
   return (
-    <div className='overflow-hidden bg-white dark:bg-gray-900 dark:text-white duration-200'>
-     <Navbar/>
-     <SearchBar/>
-     
-     {/* <Hero/> */}
-     <Routes>
-         <Route path='/' element={<Home/>}/>
-         <Route  path='/shop' element={<Shop/>}/>
-         <Route path='/about' element={<About/>}/>
-         <Route path='/contact' element={<Contact/>}/>
-         <Route path='/product/:productId' element={<ProductPage/>}/>
-         <Route path='/cart' element={<Cart/>}/>
-         <Route path='/login' element={<LoginPage/>}/>
-         <Route path='/place-order' element={<PlaceOrader/>}/>
-         <Route path='/orders' element={<Orders/>}/>
-     </Routes> 
-     <Footer/>
-    </div>
-  )
-}
+    <div className="overflow-hidden bg-white dark:bg-gray-900 dark:text-white duration-200">
+      <NavBar />
+      <SearchBar />
+      <Routes>
+        <Route path="/">
+          <Route index element={<HomePage />} />
 
-export default App
+          <Route path="auth">
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisrationPage />} />
+          </Route>
+
+          
+          <Route path="shop" element={<Shop/>} />
+          <Route path="about" element={<AboutPage/>} />
+          <Route path="contact" element={<ContactPage/>} />
+          <Route path="product/:productId" element={<ProductPage />} />
+        
+        </Route>
+      </Routes>
+      <Footer />
+    </div>
+  );
+};
+
+export default App;

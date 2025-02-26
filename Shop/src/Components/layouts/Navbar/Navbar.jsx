@@ -5,10 +5,10 @@ import { IoCartOutline } from "react-icons/io5";
 import { CiUser } from "react-icons/ci";
 import { BiMenuAltRight } from "react-icons/bi";
 import { IoMdArrowDropright } from "react-icons/io";
-import DarkMode from '../DarkMode';
-import { shopContext } from '../Contex/ShopContext';
+import DarkMode from '../../DarkMode';
+import { shopContext } from '../../Contex/ShopContext';
 
-const Navbar = () => {
+const NavBar = () => {
   const [visible, SetVisible] = useState(false);
   const { setShowSearch } = useContext(shopContext);
   const navigate = useNavigate();
@@ -59,7 +59,7 @@ const Navbar = () => {
 
           {/* Profile Icon */}
           <div className='group relative z-50'>
-             <Link to={`Login`}>
+             <Link to='auth/Login'>
              <CiUser className='text-xl cursor-pointer' />
              </Link>
             
@@ -109,4 +109,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavBar;

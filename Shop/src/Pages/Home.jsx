@@ -11,7 +11,7 @@ import Subscribe from '../Components/Subscribe'
 import RegisrationPage from './Auth/Registration'
 
 
-const Home = () => {
+const HomePage = () => {
   return (
     <div>
       <Hero />
@@ -30,4 +30,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default HomePage;

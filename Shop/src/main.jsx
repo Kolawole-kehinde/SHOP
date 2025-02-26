@@ -8,11 +8,13 @@ import "slick-carousel/slick/slick-theme.css";
 import ShopContextProvider from './Components/Contex/ShopContext.jsx'
 
 createRoot(document.getElementById('root')).render(
+   <StrictMode>
    <BrowserRouter>
    <ShopContextProvider>
         <App />
    </ShopContextProvider>
    </BrowserRouter>
+   </StrictMode>
     
  
 )
