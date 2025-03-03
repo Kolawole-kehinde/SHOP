@@ -1,10 +1,10 @@
 import {NavLink, } from 'react-router-dom';
 import { navRoutes } from '../../../constant/navRoutes';
 import { useState } from 'react';
-import { IoMdArrowDropright } from 'react-icons/io';
 import NavRight from '../NavRight';
 import { BiMenuAltRight } from 'react-icons/bi';
 import Logo from '../Logo';
+import { IoClose } from "react-icons/io5";
 
 
 const NavBar = () => {
@@ -54,26 +54,39 @@ const NavBar = () => {
         {/* Right Section */}
           <NavRight/>
       </div>
-        {/* Hamburger Menu */}
-    {/* <BiMenuAltRight onClick={() => SetVisible(true)} className='text-4xl lg:hidden cursor-pointer' /> */}
-      {/* Mobile Menu */}
-      {/* <div className={`fixed top-0 right-0 bottom-0 bg-white dark:bg-gray-900 transition-all duration-300 ease-in-out z-50 ${visible ? 'w-full' : 'w-0 overflow-hidden'}`}>
-        <div className='flex flex-col text-gray-600 dark:text-white'>
-          <div onClick={() => SetVisible(false)} className='flex items-center gap-3 p-3 cursor-pointer'>
-            <IoMdArrowDropright className='text-2xl h-4 rotate-180' />
-            <p>Back</p>
-          </div>
-          <NavLink onClick={() => SetVisible(false)} className="py-2 pl-6 border-b" to="/">HOME</NavLink>
-          <NavLink onClick={() => SetVisible(false)} className="py-2 pl-6 border-b" to="/shop">SHOP</NavLink>
-          <NavLink onClick={() => SetVisible(false)} className="py-2 pl-6 border-b" to="/about">ABOUT</NavLink>
-          <NavLink onClick={() => SetVisible(false)} className="py-2 pl-6 border-b" to="/contact">CONTACT</NavLink>
-        </div>
-      </div> */}
 
+
+        {/* Hamburger Menu */}
         {
           openMenu && (
-            <nav className='absolute inset-0 z-40'>
-               <h1>hello</h1>
+            <nav className='fixed inset-0 z-40 bg-gray-500 w-full h-[300px] text-white'>
+               <div className='flex justify-between items-center p-4'>
+               <Logo/>
+                  <button onClick={toggleMenu}>
+                <IoClose fontSize={30}/>
+             </button>
+               </div>
+               <menu className='flex flex-col items-start space-y-6 p-4'>
+                 {
+            navRoutes.map(({name, path, id}) => (
+             <li key={id}>
+                <NavLink
+              
+                to={path}
+                className={({ isActive }) =>
+                  `inline-block px-4 font-semibold  duration-200 ${
+                    isActive ? "text-red-500" : "text-white"
+                  }`
+                }
+              >
+                {name}
+              </NavLink>
+            
+
+             </li>
+            ))
+          }
+               </menu>
             </nav>
           )
         }
