@@ -7,19 +7,7 @@ import { shopContext } from './Contex/ShopContext';
 const RelatedProducts = ({ category, subCategory }) => {
   const { products } = useContext(shopContext);
   const [related, setRelated] = useState([]);
-  
 
-  // useEffect(() => {
-  //   if (products.length > 0) {
-  //     let productCopy = products.slice(); 
-  //     productCopy = productCopy.filter((item) => category === item.category);
-  //     productCopy = productCopy.filter((item) => subCategory  === item.subCategory)
-      
-  //     setRelated(productCopy.slice(0, 4));
-  //     // console.log(productCopy.slice(0, 4));
-      
-  //   }
-  // }, [products]);
 useEffect(() => {
   if (products.length > 0) {
     setRelated(products.filter((item) => item.category === category && item.subCategory === subCategory).slice(0, 4));
@@ -34,7 +22,7 @@ useEffect(() => {
       </div>
 
      
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 gap-y-6'>
           {related?.map((item) => (
             <ProductItem 
               key={item._id} 

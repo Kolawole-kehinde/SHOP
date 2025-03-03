@@ -3,7 +3,7 @@ import React from 'react'
 const Footer = () => {
   return (
     <section id='footer'>
-      <div className='container my-10 mt-40 flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 text-base font-[Outfit]'>
+      <div className='container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-10 gap-14 text-base font-[Outfit]'>
 
         {/* First column */}
         <div>

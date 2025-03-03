@@ -17,10 +17,10 @@ const BestSellers = () => {
       <div className='container my-8'>
         <div className='text-center text-3xl py-8'>
           <Tittle text1={'BEST'} text2={'SELLERS'} />
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <p className='text-base md:text-2xl lg:text-3xl'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         </div>
 
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 gap-y-6'>
+        <div className='grid grid-cols-1  md:grid-cols-2 lg:grid-cols-4 gap-5'>
           {bestSellers.map((item) => (
             <ProductItem 
               key={item.id} 

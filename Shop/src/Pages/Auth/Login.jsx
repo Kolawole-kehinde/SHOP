@@ -46,15 +46,21 @@ const LoginPage = () => {
               register={register}
               error={errors[name]}
             />
-           {type === "password" && (
-  <div className="absolute top-1/2 right-3 flex items-center">
-    {showPassword ? (
-      <FaEye onClick={togglePassword} className="cursor-pointer text-gray-600" />
-    ) : (
-      <FaEyeSlash onClick={togglePassword} className="cursor-pointer text-gray-600" />
-    )}
-  </div>
-)}
+            {type === "password" && (
+              <div className="absolute top-1/2 right-3 flex items-center">
+                {showPassword ? (
+                  <FaEye
+                    onClick={togglePassword}
+                    className="cursor-pointer text-gray-600"
+                  />
+                ) : (
+                  <FaEyeSlash
+                    onClick={togglePassword}
+                    className="cursor-pointer text-gray-600"
+                  />
+                )}
+              </div>
+            )}
           </div>
         ))}
         <button

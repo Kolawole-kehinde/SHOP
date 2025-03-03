@@ -14,9 +14,9 @@ const Banner2 = () => {
                       <p>10 Jan to 28 Jan</p>
                  </div>
 
-                 <div className='h-full flex justify-center'>
+                 <div className='h-auto flex justify-center'>
                   <img src={watch} alt="headphone"
-                  className='w-[250px] md:w-[340px] sm:scale-125 mx-auto drop-shadow-xl object-cover'
+                  className='w-[250px] md:w-[340px] sm:scale-125 md:scale-150 mx-auto drop-shadow-xl object-cover'
                   />
                  </div>
 

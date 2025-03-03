@@ -16,11 +16,11 @@ const LatestCollection = () => {
       <div className='container'>
         <div className='text-center py-8 text-3xl'>
           <Tittle text1={"LATEST"} text2={"COLLECTIONS"} />
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <p className='text-base md:text-2xl lg:text-3xl'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         </div>
 
         {/* Rendering products */}
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5'>
+        <div className='grid grid-cols-1  md:grid-cols-2 lg:grid-cols-4 gap-5'>
           {latestProducts.map((item) => (
             <ProductItem 
               key={item.id} 
