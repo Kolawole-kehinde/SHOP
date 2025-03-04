@@ -1,10 +1,9 @@
-import {NavLink, } from 'react-router-dom';
-import { navRoutes } from '../../../constant/navRoutes';
 import { useState } from 'react';
 import NavRight from '../NavRight';
 import { BiMenuAltRight } from 'react-icons/bi';
 import Logo from '../Logo';
 import { IoClose } from "react-icons/io5";
+import Menu from '../Menu';
 
 
 const NavBar = () => {
@@ -13,60 +12,31 @@ const NavBar = () => {
   const toggleMenu = () => {
     return SetOpenMenu((prev) => !prev);
   }  
-
-  const active =(isActive) => {
-    return isActive ? "text-yellow-500" : "text-gray-500";
-  }
-
   return (
     <header className=' bg-white dark:bg-gray-900 py-4 dark:text-white duration-200 relative z-40'>
-      <div className='container flex justify-between items-center'>
-
-        {/* Logo Section */}
+      <nav className='container flex justify-between items-center'>
         <Logo/>
-
-        {/* Navbar Links for large screens */}
         <button className='lg:hidden block' onClick={toggleMenu}>
         <BiMenuAltRight fontSize={30}/>
         </button>
-        <nav className="hidden lg:flex items-center gap-4 uppercase">
-          {
-            navRoutes.map(({name, path, id}) => (
-              <NavLink
-              key={id}
-                to={path}
-                className={({ isActive }) =>
-                  `inline-block px-4 font-semibold  duration-200 ${
-                    isActive ? "text-red-500" : "text-gray-500"
-                  }`
-                }
-              >
-                {name}
-              </NavLink>
-            
-
-            ))
-          }
-         
-         
-        </nav>
+           <Menu menuStyle="hidden lg:flex items-center gap-14 font-semibold uppercase"/>
 
         {/* Right Section */}
           <NavRight/>
-      </div>
+      </nav>
 
 
         {/* Hamburger Menu */}
         {
           openMenu && (
-            <nav className='fixed inset-0 z-40 bg-gray-500 w-full h-[300px] text-white'>
+            <nav className='fixed inset-0 z-40 bg-gray-300 w-full h-[300px]'>
                <div className='flex justify-between items-center p-4'>
-               <Logo/>
+               <Logo toggleMenu={toggleMenu}/>
                   <button onClick={toggleMenu}>
                 <IoClose fontSize={30}/>
              </button>
                </div>
-              
+                <Menu menuStyle='flex flex-col items-start space-y-6 p-4 text-xl' toggleMenu={toggleMenu}/>  
             </nav>
           )
         }

@@ -1,20 +1,21 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
+import { navRoutes } from '../../constant/navRoutes';
 
-const Menu = () => {
+const Menu = ({menuStyle, toggleMenu}) => {
+    const active =(isActive) => {
+        return isActive ? "text-red-500" : "text-gray-500";
+      }
   return (
     <>
-        <menu className='flex flex-col items-start space-y-6 p-4'>
+        <menu className={menuStyle} >
                  {
             navRoutes.map(({name, path, id}) => (
              <li key={id}>
                 <NavLink
-              
                 to={path}
-                className={({ isActive }) =>
-                  `inline-block px-4 font-semibold  duration-200 ${
-                    isActive ? "text-red-500" : "text-white"
-                  }`
-                }
+                className={({ isActive }) => active(isActive)}
+                onClick={toggleMenu}
               >
                 {name}
               </NavLink>
