@@ -1,15 +1,11 @@
-import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../../utils/Schema/authSchema";
 import { loginLists } from "../../constant/auth";
 import CustomInput from "../../Components/CustomInput";
 import AuthLayout from "../../Components/layouts/AuthLayout";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const LoginPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -24,10 +20,6 @@ const LoginPage = () => {
     reset();
   };
 
-  const togglePassword = () => {
-    setShowPassword((prevState) => !prevState);
-  };
-
   return (
     <AuthLayout
       title={"Login to Your Account"}
@@ -40,27 +32,12 @@ const LoginPage = () => {
           <div key={name} className="relative">
             <CustomInput
               label={label}
-              type={showPassword && type === "password" ? "text" : type}
+              type={type}
               name={name}
               placeholder={placeholder}
               register={register}
               error={errors[name]}
             />
-            {type === "password" && (
-              <div className="absolute top-1/2 right-3 flex items-center">
-                {showPassword ? (
-                  <FaEye
-                    onClick={togglePassword}
-                    className="cursor-pointer text-gray-600"
-                  />
-                ) : (
-                  <FaEyeSlash
-                    onClick={togglePassword}
-                    className="cursor-pointer text-gray-600"
-                  />
-                )}
-              </div>
-            )}
           </div>
         ))}
         <button
