@@ -39,16 +39,16 @@ const NavRight = () => {
       <div className='relative p-2'>
         <Link to="/cart">
           <IoCartOutline className='text-2xl text-gray-600 dark:text-gray-400' />
-          <p className='w-4 h-4 bg-black text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs'>
+          <p className='w-4 h-4 bg-black dark:bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs'>
           {getCartCount()}
           </p>
         </Link>
       </div>
 
       {/* Dark Mode */}
-      <div>
+      {/* <div>
         <DarkMode />
-      </div>
+      </div> */}
 
     </div>
   );
