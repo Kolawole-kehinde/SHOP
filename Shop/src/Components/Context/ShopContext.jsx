@@ -12,25 +12,38 @@ const ShopContextProvider = (props) => {
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
 
-  const addToCart = (itemId) => {
-    if (!itemId) {
-      console.error("Invalid itemId ", { itemId});
-      return; // Prevent adding undefined values
-    }
-
+  // Add to Cart Function
+  const addToCart = (itemId, size) => {
     setCartItems((prevCart) => {
-      const newCart = { ...prevCart };
+      const updatedCart = { ...prevCart };
 
-      if (!newCart[itemId]) {
-        newCart[itemId] = {};
+      if (!updatedCart[itemId]) {
+        updatedCart[itemId] = {};
       }
 
-      newCart[itemId] = (newCart[itemId] || 0) + 1;
+      if (!updatedCart[itemId][size]) {
+        updatedCart[itemId][size] = 1;
+      } else {
+        updatedCart[itemId][size] += 1;
+      }
 
-      console.log("Updated Cart:", newCart);
-      return newCart;
+      return updatedCart;
     });
   };
+
+  // Get Cart Total Count
+  const getCartCount = () => {
+    let totalCount = 0;
+
+    for (const itemId in cartItems) {
+      for (const size in cartItems[itemId]) {
+        totalCount += cartItems[itemId][size];
+      }
+    }
+
+    return totalCount;
+  };
+
   const value = {
     products,
     currency,
@@ -40,7 +53,8 @@ const ShopContextProvider = (props) => {
     showSearch,
     setShowSearch,
     cartItems,
-    addToCart
+    addToCart,
+    getCartCount
   };
 
   return (

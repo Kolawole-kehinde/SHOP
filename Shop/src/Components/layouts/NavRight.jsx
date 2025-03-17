@@ -7,7 +7,7 @@ import { shopContext } from '../Context/ShopContext';
 
 
 const NavRight = () => {
-  const { setShowSearch } = useContext(shopContext);
+  const { setShowSearch, getCartCount } = useContext(shopContext);
   const navigate = useNavigate();
 
   return (
@@ -39,8 +39,8 @@ const NavRight = () => {
       <div className='relative p-2'>
         <Link to="/cart">
           <IoCartOutline className='text-2xl text-gray-600 dark:text-gray-400' />
-          <p className='w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs'>
-            4
+          <p className='w-4 h-4 bg-black text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs'>
+          {getCartCount()}
           </p>
         </Link>
       </div>
