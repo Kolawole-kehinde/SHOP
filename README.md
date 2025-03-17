@@ -1,2 +1,0 @@
-# SHOP
- E-Commerce Store

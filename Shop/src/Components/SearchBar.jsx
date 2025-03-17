@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
-import { shopContext } from './Contex/ShopContext'
 import { CiSearch } from "react-icons/ci";
 import { RxCross2 } from "react-icons/rx";
 import { useLocation } from 'react-router-dom';
+import { shopContext } from './Context/ShopContext';
 
 const SearchBar = () => {
   const {search,setSearch,showSearch, setShowSearch} =useContext(shopContext);

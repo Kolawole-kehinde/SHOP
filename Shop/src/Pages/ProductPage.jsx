@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { shopContext } from '../Components/Contex/ShopContext';
 import RelatedProducts from '../Components/RelatedProducts';
+import { shopContext } from '../Components/Context/ShopContext';
 
 const ProductPage = () => {
   const { productId } = useParams();
-  const { products, currency } = useContext(shopContext);
+  const { products, currency, addToCart } = useContext(shopContext);
   const [productData, setProductData] = useState(null);
   const [image, setImage] = useState('');
 
   useEffect(() => {
-    const product = products.find((item) => item.id === parseInt(productId));
+    const product = products.find((item) => item.id === parseInt(productId)); // Check if ID is correct
     if (product) {
       setProductData(product);
       setImage(Array.isArray(product.image) ? product.image[0] : product.image);
@@ -24,6 +24,15 @@ const ProductPage = () => {
       </div>
     );
   }
+
+  const handleAddToCart = () => {
+    if (!productData.id) {
+      console.error("Error: Product ID is missing!");
+      return;
+    }
+
+    addToCart(productData.id);
+  };
 
   return (
     <div className="container border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
@@ -53,9 +62,14 @@ const ProductPage = () => {
             {productData.price}
           </p>
 
-          <button className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700 mt-4">
+          {/* Add to Cart Button */}
+          <button
+            onClick={handleAddToCart}
+            className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700 mt-4"
+          >
             ADD TO CART
           </button>
+
           <hr className="mt-8 sm:w-4/5" />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
             <p>100% Original Product</p>
@@ -65,26 +79,21 @@ const ProductPage = () => {
         </div>
       </div>
 
+      {/* Related Products */}
       <div className="mt-20">
         <div className="flex">
           <p className="border px-5 py-3 text-sm">Description</p>
           <p className="border px-5 py-3 text-sm">Reviews (122)</p>
         </div>
-
         <div className="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500">
           <p>
-           Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis dolor aspernatur iste officiis quod quisquam molestias facere! Atque, fugit perspiciatis. Molestiae sequi recusandae labore at veniam cum voluptas distinctio, aperiam exercitationem saepe aspernatur voluptatibus, suscipit molestias, ducimus nobis perspiciatis illo delectus aliquid eveniet commodi! Ad nisi magnam doloribus vel hic! Accusamus hic deleniti consequatur asperiores? Nihil quae voluptates alias voluptatum! Quisquam laboriosam quia iusto ipsum architecto soluta repellat velit quam assumenda ut accusantium ad adipisci, possimus accusamus iure, facere minus libero animi ab asperiores optio harum? Perferendis possimus unde repudiandae!
-          </p>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia pariatur nulla eum sint cupiditate
-            expedita nesciunt aspernatur adipisci! Vel nemo mollitia quos exercitationem at ullam numquam quas
-            eius alias.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis dolor aspernatur iste officiis quod quisquam molestias facere! Atque, fugit perspiciatis. Molestiae sequi recusandae labore at veniam cum voluptas distinctio, aperiam exercitationem saepe aspernatur voluptatibus, suscipit molestias, ducimus nobis perspiciatis illo delectus aliquid eveniet commodi! Ad nisi magnam doloribus vel hic! Accusamus hic deleniti consequatur asperiores? Nihil quae voluptates alias voluptatum! Quisquam laboriosam quia iusto ipsum architecto soluta repellat velit quam assumenda ut accusantium ad adipisci, possimus accusamus iure, facere minus libero animi ab asperiores optio harum? Perferendis possimus unde repudiandae!
           </p>
         </div>
       </div>
 
-    {/* ................Display Related Products...................... */}
-            <RelatedProducts category={productData.category} subCategory={productData.subCategory}/>
+      {/* Display Related Products */}
+      <RelatedProducts category={productData.category} subCategory={productData.subCategory} />
     </div>
   );
 };
