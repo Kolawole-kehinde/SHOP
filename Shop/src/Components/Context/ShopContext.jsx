@@ -25,10 +25,6 @@ const ShopContextProvider = (props) => {
     });
   };
 
-  // Get Cart Total Count
-  // const getCartCount = () => {
-  //   return Object.values(cartItems).reduce((acc, quantity) => acc + quantity, 0);
-  // };
   const getCartCount = () => {
     let totalCount = 0;
   

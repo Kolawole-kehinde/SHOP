@@ -11,6 +11,7 @@ import ProductPage from "./Pages/ProductPage";
 import SearchBar from "./Components/SearchBar";
 import Footer from "./Components/layouts/Footer";
 import NavBar from "./Components/layouts/Navbar/Navbar";
+import CartPage from "./Pages/CartPage";
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
 
           
           <Route path="shop" element={<Shop/>} />
+          <Route path="cart" element={<CartPage/>} />
           <Route path="about" element={<AboutPage/>} />
           <Route path="contact" element={<ContactPage/>} />
           <Route path="product/:productId" element={<ProductPage />} />

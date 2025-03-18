@@ -64,7 +64,7 @@ const ProductPage = () => {
           </p>
 
           <button
-            onClick={() => addToCart(productData._id)}
+            onClick={() => addToCart(productData.id)}
             className="bg-black text-white px-8 py-3"
           >
             ADD TO CART
