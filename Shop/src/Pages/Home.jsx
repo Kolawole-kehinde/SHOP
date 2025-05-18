@@ -8,7 +8,7 @@ import BestSellers from '../Components/BestSellers'
 import Banner2 from '../Components/Banner2'
 import OurPolicy from '../Components/OurPolicy'
 import Subscribe from '../Components/Subscribe'
-import RegisrationPage from './Auth/Registration'
+
 
 
 const HomePage = () => {
@@ -23,7 +23,7 @@ const HomePage = () => {
       <BestSellers/>
       <Banner2/>
       <Subscribe/>
-      <RegisrationPage/>
+      {/* <RegisrationPage/> */}
      
 
     </div>

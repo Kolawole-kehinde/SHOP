@@ -13,7 +13,7 @@ const NavBar = () => {
     return SetOpenMenu((prev) => !prev);
   }  
   return (
-    <header className=' bg-white dark:bg-gray-900 py-4 dark:text-white duration-200 relative z-40'>
+    <header className=' bg-white dark:bg-gray-900 py-4 dark:text-white duration-200 relative'>
       <nav className='container flex justify-between items-center'>
         <Logo/>
         <button className='lg:hidden block' onClick={toggleMenu}>
