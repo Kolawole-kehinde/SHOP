@@ -6,10 +6,10 @@ const Logo = ({ toggleMenu }) => {
     <h1 className="flex items-center gap-4">
       <NavLink
         to="/"
-        className="text-2xl md:text-3xl text-red-600 -tracking-widest"
+        className="text-2xl md:text-3xl text-red-600 "
         onClick={toggleMenu}
       >
-        EShop
+      Eshop
       </NavLink>
     </h1>
   );

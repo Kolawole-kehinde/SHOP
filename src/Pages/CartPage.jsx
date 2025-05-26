@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import Tittle from "../Components/Tittle";
-import { shopContext } from "../Components/Context/ShopContext";
+import { shopContext } from "../Context/ShopContext";
 
 
 const CartPage = () => {

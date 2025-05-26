@@ -3,7 +3,7 @@ import { CiSearch, CiUser } from 'react-icons/ci';
 import { IoCartOutline } from 'react-icons/io5';
 import DarkMode from '../DarkMode';
 import { Link, useNavigate } from 'react-router-dom';
-import { shopContext } from '../Context/ShopContext';
+import { shopContext } from '../../Context/ShopContext';
 
 
 const NavRight = () => {

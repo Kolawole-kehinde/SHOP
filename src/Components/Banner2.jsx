@@ -1,5 +1,5 @@
 import React from 'react'
-import watch from '../assets/banner2--img.png'
+
 
 
 const Banner2 = () => {
@@ -15,7 +15,7 @@ const Banner2 = () => {
                  </div>
 
                  <div className='h-auto flex justify-center'>
-                  <img src={watch} alt="headphone"
+                  <img src="images/banner2.png" alt="banner2"
                   className='w-[250px] md:w-[340px] sm:scale-125 md:scale-150 mx-auto drop-shadow-xl object-cover'
                   />
                  </div>

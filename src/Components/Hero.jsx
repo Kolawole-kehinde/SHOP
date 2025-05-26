@@ -1,8 +1,6 @@
 import React from 'react'
-import Slider from "react-slick";
-import image1 from '../../assets/headphone.png'
-import image2 from '../../assets/vr.png'
-import image3 from '../../assets/macbook.png'
+import { HeroData } from '../constant/heroSectionData';
+import Slider from 'react-slick';
 
 const Hero = () => {
   const settings = {
@@ -19,39 +17,13 @@ const Hero = () => {
     pauseOnFocus: true,
   };
 
-   const HeroData = [
-       {
-        id: 1,
-        image: image1,
-        subtitle: "Beat Solo",
-        title: "Wireless",
-        title2: "Headphone",
-        Description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam non itaque dignissimos repellendus placeat. Autem voluptate quibusdam ab quisquam aut?"
-       },
-       {
-        id: 2,
-        image: image2,
-        subtitle: "Beat Solo",
-        title: "Wireless",
-        title2: "Virtual",
-        Description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam non itaque dignissimos repellendus placeat. Autem voluptate quibusdam ab quisquam aut?"
-       },
-       {
-        id: 3,
-        image: image3,
-        subtitle: "Beat Solo",
-        title: "Branded",
-        title2: "Laptops",
-        Description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam non itaque dignissimos repellendus placeat. Autem voluptate quibusdam ab quisquam aut?"
-       },
-   ]
   return (
-         <div className='container pt-24'>
+         <section className='container mt-6'>
             <div className='overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color flex items-center justify-center'>
               <div className='container pb-8 sm:pb-0'>
                 <Slider {...settings}>
                  {
-                  HeroData.map((data) => (
+                  HeroData?.map((data) => (
                     <div key={data.id}>
                       <div className='grid grid-cols-1 sm:grid-cols-2'>
 
@@ -81,7 +53,7 @@ const Hero = () => {
                </Slider>
               </div>
             </div>
-         </div>
+         </section>
   )
 }
 

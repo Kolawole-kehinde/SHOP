@@ -25,7 +25,8 @@ const LoginPage = () => {
       title={"Login to Your Account"}
       text={"Don't have an account?"}
       subtext={"Register"}
-      textLink={"auth/Registration"}
+      textLink={"/auth/register"}
+
     >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {loginLists.map(({ label, type, name, placeholder }) => (
@@ -42,7 +43,7 @@ const LoginPage = () => {
         ))}
         <button
           type="submit"
-          className="w-full px-4 py-3 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          className="w-full px-4 py-3 font-semibold text-white bg-primary rounded-lg hover:bg-primary/70 focus:ring-2 focus:ring-primary focus:outline-none"
         >
           Login
         </button>

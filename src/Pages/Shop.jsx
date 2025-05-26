@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Tittle from "../Components/Tittle";
 import ProductItem from "../Components/ProductItem";
-import { shopContext } from "../Components/Context/ShopContext";
+import { shopContext } from "../Context/ShopContext";
 
 
 const Shop = () => {

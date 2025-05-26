@@ -1,7 +1,5 @@
 import React from 'react';
-import image1 from '../assets/gaming.png';
-import image2 from '../assets/vr.png';
-import image3 from '../assets/speaker.png';
+
 
 const Category2 = () => {
   return (
@@ -22,7 +20,7 @@ const Category2 = () => {
                 </button>
               </div>
             </div>
-            <img src={image1} alt="" className='w-[300px] absolute top-1/2 -translate-y-1/2 right-0' />
+            <img src="images/gaming.png" alt="gaming" className='w-[300px] absolute top-1/2 -translate-y-1/2 right-0' />
           </div>
 
           {/* SECOND COLUMN */}
@@ -37,7 +35,7 @@ const Category2 = () => {
                 </button>
               </div>
             </div>
-            <img src={image2} alt="" className='w-[320px] absolute bottom-0 sm:right-1' />
+            <img src="images/vr.png" alt="vr" className='w-[320px] absolute bottom-0 sm:right-1' />
           </div>
 
           {/* THIRD COLUMN */}
@@ -52,7 +50,7 @@ const Category2 = () => {
                 </button>
               </div>
             </div>
-            <img src={image3} alt="" className='w-[250px] sm:w-[250px] bottom-0 right-0 absolute' />
+            <img src="images/speaker.png" alt="speaker" className='w-[250px] sm:w-[250px] bottom-0 right-0 absolute' />
           </div>
 
         </div>

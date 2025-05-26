@@ -1,5 +1,5 @@
 import React from 'react'
-import Hero from '../Components/Hero/Hero'
+import Hero from '../Components/Hero'
 import Category1 from '../Components/Category1'
 import Category2 from '../Components/Category2'
 import LatestCollection from '../Components/LatestCollection'

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+
 const AuthLayout = ({children, title, text, subtext, textLink}) => {
   return (
    
@@ -11,7 +12,7 @@ const AuthLayout = ({children, title, text, subtext, textLink}) => {
         {children}
         <p className="text-sm text-center text-gray-600">
         {text}
-          <Link to={textLink} className="text-blue-500 hover:underline">
+          <Link to={textLink} className="text-primary hover:underline">
             {subtext}
           </Link>
         </p>

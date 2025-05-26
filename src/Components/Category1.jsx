@@ -1,7 +1,5 @@
 import React from 'react';
-import image1 from '../assets/earphone.png';
-import image2 from '../assets/watch.png';
-import image3 from '../assets/macbook.png';
+
 
 const Category1 = () => {
   return (
@@ -24,8 +22,8 @@ const Category1 = () => {
               </div>
               {/* Image on the Right */}
               <img 
-                src={image1} 
-                alt="" 
+                src="images/earphone.png"
+                alt="earphone" 
                 className='w-[250px] sm:w-[320px] absolute bottom-0 sm:-translate-y-0'
               />
             </div>
@@ -45,8 +43,8 @@ const Category1 = () => {
               </div>
               {/* Image on the Right */}
               <img 
-                src={image2} 
-                alt="" 
+                src="images/watch.png" 
+                alt="watch" 
                 className='w-[400px] sm:w-[320px] absolute -right-10 bottom-0 top-1/4'
               />
             </div>
@@ -66,8 +64,8 @@ const Category1 = () => {
               </div>
               {/* Image on the Right */}
               <img 
-                src={image3} 
-                alt="" 
+                src="images/macbook.png" 
+                alt="macbook" 
                 className='w-[250px] sm:w-[320px] absolute right-10 bottom-20 lg:top-10 '
               />
             </div>

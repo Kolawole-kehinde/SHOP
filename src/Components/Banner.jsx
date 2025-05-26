@@ -1,5 +1,4 @@
-import React from 'react';
-import headphone from '../assets/headphone.png';
+
 
 const Banner = () => {
   return (
@@ -17,7 +16,7 @@ const Banner = () => {
             {/* Column 2 */}
             <div className='h-auto flex justify-center'>
               <img 
-                src={headphone} 
+                src="/images/headphone.png" 
                 alt="headphone"
                 className='w-[250px] md:w-[340px] sm:scale-125 md:scale-150 mx-auto drop-shadow-xl object-cover'
               />
