@@ -1,8 +1,27 @@
 import React from 'react'
 import { registerLists } from '../../constant/auth'
 import AuthLayout from '../../Components/layouts/AuthLayout'
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { registerSchema } from '../../Schema/authSchema';
+import CustomInput from '../../Components/CustomInput';
 
 const RegistrationPage = () => {
+
+   const {
+     register,
+     handleSubmit,
+     formState: { errors },
+     reset,
+   } = useForm({
+     resolver: zodResolver(registerSchema),
+   });
+ 
+   const onSubmit = (data) => {
+     console.log(data);
+     reset();
+   };
+
   return (
     <AuthLayout
       title={"Register Here"}
@@ -10,15 +29,17 @@ const RegistrationPage = () => {
       subtext={"Login"}
     textLink={"/auth/login"}
     >
-       <form className="space-y-4">
-          {registerLists?.map((field) => (
-            <div key={field.name}>
-              <label className="block text-sm font-medium text-gray-700">{field.label}</label>
-              <input
-                type={field.type}
-                name={field.name}
+       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {registerLists?.map(({ label, type, name, placeholder }) => (
+            <div key={name}>
+              <label className="block text-sm font-medium text-gray-700">{label}</label>
+              <CustomInput
+                type={type}
+                name={name}
                 className="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
-                placeholder={field.placeholder}
+                placeholder={placeholder}
+               register={register}
+                error={errors[name]}
               />
             </div>
           ))}

@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "../../utils/Schema/authSchema";
+import { loginSchema } from "../../Schema/authSchema";
 import { loginLists } from "../../constant/auth";
 import CustomInput from "../../Components/CustomInput";
 import AuthLayout from "../../Components/layouts/AuthLayout";
