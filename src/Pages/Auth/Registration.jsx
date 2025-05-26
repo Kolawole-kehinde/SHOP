@@ -23,25 +23,25 @@ const RegistrationPage = () => {
    };
 
   return (
+     <section>
     <AuthLayout
       title={"Register Here"}
       text={"Already have an account ?"}
       subtext={"Login"}
     textLink={"/auth/login"}
     >
+  
        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {registerLists?.map(({ label, type, name, placeholder }) => (
-            <div key={name}>
-              <label className="block text-sm font-medium text-gray-700">{label}</label>
               <CustomInput
+              key={name}
                 type={type}
                 name={name}
-                className="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
+                label={label}
                 placeholder={placeholder}
                register={register}
-                error={errors[name]}
+              error={errors[name]}
               />
-            </div>
           ))}
           <button
             type="submit"
@@ -51,6 +51,7 @@ const RegistrationPage = () => {
           </button>
         </form>
     </AuthLayout>
+    </section>
   )
 }
 
