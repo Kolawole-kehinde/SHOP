@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "../../Schema/authSchema";
 import { loginLists } from "../../constant/auth";
 import CustomInput from "../../Components/CustomInput";
 import AuthLayout from "../../Components/layouts/AuthLayout";
+import { loginSchema } from "../../Schema/authSchema";
+
 
 const LoginPage = () => {
   const {
@@ -29,7 +30,7 @@ const LoginPage = () => {
 
     >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {loginLists.map(({ label, type, name, placeholder }) => (
+        {loginLists?.map(({ label, type, name, placeholder }) => (
           <div key={name} className="relative">
             <CustomInput
               label={label}
