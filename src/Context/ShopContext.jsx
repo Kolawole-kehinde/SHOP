@@ -14,24 +14,20 @@ const ShopContextProvider = (props) => {
   const addToCart = (itemId) => {
     setCartItems((prevCart) => {
       const updatedCart = { ...prevCart };
-
       if (!updatedCart[itemId]) {
-        updatedCart[itemId] = 1; // First time adding the item
+        updatedCart[itemId] = 1;
       } else {
-        updatedCart[itemId] += 1; // Increase quantity
+        updatedCart[itemId] += 1; 
       }
-
       return updatedCart;
     });
   };
 
   const getCartCount = () => {
     let totalCount = 0;
-  
     for (let quantity of Object.values(cartItems)) {
       totalCount += quantity;
     }
-  
     return totalCount;
   };
 
@@ -45,7 +41,7 @@ const ShopContextProvider = (props) => {
     setShowSearch,
     cartItems,
     addToCart,
-    getCartCount, // ✅ Now included to avoid errors
+    getCartCount,
   };
 
   return <shopContext.Provider value={value}>{props.children}</shopContext.Provider>;

@@ -1,29 +1,31 @@
 import React, { useContext } from 'react';
 import { CiSearch, CiUser } from 'react-icons/ci';
 import { IoCartOutline } from 'react-icons/io5';
-import DarkMode from '../DarkMode';
 import { Link, useNavigate } from 'react-router-dom';
 import { shopContext } from '../../Context/ShopContext';
-
 
 const NavRight = () => {
   const { setShowSearch, getCartCount } = useContext(shopContext);
   const navigate = useNavigate();
 
+  const handleSearchClick = () => {
+    setShowSearch(true);
+    navigate('/shop');
+  };
+
   return (
     <div className='hidden md:flex justify-between items-center gap-4'>
-
-      {/* Search Bar Section */}
-      <div className='relative group'>
+      {/* Search Icon */}
+      <div className='relative group cursor-pointer'>
         <CiSearch 
-          onClick={() => navigate("shop")}
-          className='text-2xl text-gray-600 dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-300'
+          onClick={handleSearchClick} 
+          className='text-2xl text-gray-600 dark:text-gray-400'
         />
       </div>
 
       {/* Profile Icon */}
       <div className='group relative z-50'>
-        <Link to='auth/Login'>
+        <Link to='/auth/login'>
           <CiUser className='text-xl cursor-pointer' />
         </Link>
         <div className='hidden group-hover:block absolute right-0 pt-4'>
@@ -37,21 +39,22 @@ const NavRight = () => {
 
       {/* Cart Icon */}
       <div className='relative p-2'>
-        <Link to="/cart">
+        <Link to='/cart'>
           <IoCartOutline className='text-2xl text-gray-600 dark:text-gray-400' />
           <p className='w-4 h-4 bg-black dark:bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs'>
-          {getCartCount()}
+            {getCartCount()}
           </p>
         </Link>
       </div>
 
-      {/* Dark Mode */}
-      {/* <div>
-        <DarkMode />
-      </div> */}
-
+      {/* Sign In Button */}
+      <Link to='/auth/register'>
+        <button className='bg-primary px-10 py-3 rounded-md text-white font-semibold hidden lg:block hover:bg-primary/90 duration-300'>
+          Sign In
+        </button>
+      </Link>
     </div>
   );
-}
+};
 
 export default NavRight;

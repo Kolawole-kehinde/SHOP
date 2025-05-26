@@ -20,17 +20,13 @@ const NavBar = () => {
         <Menu menuStyle="hidden lg:flex items-center gap-8 font-semibold uppercase" />
 
         {/* Right Section */}
-        <div className="flex items-center justify-center gap-4">
+
           <NavRight />
-         <Link to="/auth/register">
-           <button className="bg-primary px-10 py-3 rounded-md text-white font-semibold hidden lg:block hover:bg-primary/90 duration-300">
-            Sign In
-          </button>
-         </Link>
+        
           <button className="lg:hidden block" onClick={toggleMenu}>
             <BiMenuAltRight fontSize={30} />
           </button>
-        </div>
+    
       </nav>
 
       {/* Hamburger Menu */}
