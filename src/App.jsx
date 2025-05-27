@@ -11,6 +11,7 @@ import Footer from "./Components/layouts/Footer";
 import NavBar from "./Components/layouts/Navbar";
 import CartPage from "./Pages/CartPage";
 import RegistrationPage from "./Pages/Auth/Registration";
+import CheckoutPage from "./Pages/CheckoutPage";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="about" element={<AboutPage />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="product/:productId" element={<ProductPage />} />
+        <Route path="checkout" element={<CheckoutPage />} />
       </Routes>
       <Footer />
     </div>

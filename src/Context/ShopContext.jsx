@@ -1,3 +1,4 @@
+
 import { createContext, useState } from "react";
 import { products } from "../assets/asset";
 
@@ -10,25 +11,21 @@ const ShopContextProvider = (props) => {
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
 
-  // Add to Cart Function
-  const addToCart = (itemId) => {
+  // Add to Cart Function (with quantity)
+  const addToCart = (itemId, quantity = 1) => {
     setCartItems((prevCart) => {
       const updatedCart = { ...prevCart };
       if (!updatedCart[itemId]) {
-        updatedCart[itemId] = 1;
+        updatedCart[itemId] = quantity;
       } else {
-        updatedCart[itemId] += 1; 
+        updatedCart[itemId] += quantity;
       }
       return updatedCart;
     });
   };
 
   const getCartCount = () => {
-    let totalCount = 0;
-    for (let quantity of Object.values(cartItems)) {
-      totalCount += quantity;
-    }
-    return totalCount;
+    return Object.values(cartItems).reduce((acc, quantity) => acc + quantity, 0);
   };
 
   const value = {
