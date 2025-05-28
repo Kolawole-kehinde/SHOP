@@ -15,10 +15,10 @@ export const loginLists = [
   
   export const registerLists = [
     {
-      label: "Username",
+      label: "FullName",
       name: "name",
       type: "text",
-      placeholder: "Username",
+      placeholder: "FullName",
     },
     {
       label: "Email Address",

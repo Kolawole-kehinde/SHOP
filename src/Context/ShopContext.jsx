@@ -1,8 +1,14 @@
 
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { products } from "../assets/asset";
+import LocalStorageService from "../utils/HandleLocalStorage";
+import { useNavigate } from "react-router-dom";
 
-export const shopContext = createContext();
+export const shopContext = createContext({
+   user: null,
+  setUser: () => {},
+  handleLogout: () => {},
+});
 
 const ShopContextProvider = (props) => {
   const currency = "$";
@@ -10,6 +16,14 @@ const ShopContextProvider = (props) => {
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
+  const { getItem, setItem, clear } = LocalStorageService;
+  
+  const [user, setUser] = useState(getItem("auth") || null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) setItem("auth", user);
+  }, [user]);
 
   // Add to Cart Function (with quantity)
   const addToCart = (itemId, quantity = 1) => {
@@ -27,6 +41,21 @@ const ShopContextProvider = (props) => {
   const getCartCount = () => {
     return Object.values(cartItems).reduce((acc, quantity) => acc + quantity, 0);
   };
+    // Handle user logout
+  const handleLogout = async () => {
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.signOut(); 
+      if (error) throw error;
+      setUser(null);
+      clear(); 
+      navigate("/auth/login"); 
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false); 
+    }
+  };
 
   const value = {
     products,
@@ -39,6 +68,9 @@ const ShopContextProvider = (props) => {
     cartItems,
     addToCart,
     getCartCount,
+    user,
+    setUser,
+    handleLogout
   };
 
   return <shopContext.Provider value={value}>{props.children}</shopContext.Provider>;
