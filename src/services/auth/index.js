@@ -4,8 +4,6 @@ import { supabase } from "../../lib/supabaseClient";
 export const signUpApi = async (payload) => {
   const { email, name, password } = payload;
 
-  if (!name) throw new Error("Name is required");
-
   const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
     email,
     password,
@@ -17,11 +15,16 @@ export const signUpApi = async (payload) => {
 
   if (!user) throw new Error("User not found after sign up");
 
-  console.log("Inserting user:", { user_id: user.id, name, email });
-
+  // Insert user info into 'users' table
   const { data: userData, error: insertError } = await supabase
     .from("users")
-    .insert([{ user_id: user.id, name, email }])
+    .insert([
+      {
+        user_id: user.id,
+        name,
+        email
+      },
+    ])
     .select("*")
     .single();
 
@@ -29,7 +32,6 @@ export const signUpApi = async (payload) => {
 
   return userData;
 };
-
 
 // SIGN IN
 export const signInApi = async (payload) => {
