@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { shopContext } from '../Context/ShopContext';
-import RelatedProducts from '../Components/RelatedProducts';
 import { useProductById } from '../hooks/useProducts';
+import RelatedProducts from '../Components/RelatedProducts';
+import ImageGallery from '../Components/ProductDetails/ImageGallery';
+import ProductInfo from '../Components/ProductDetails/ProductInfo';
 
 const ProductPage = () => {
   const { productId } = useParams();
@@ -10,8 +12,6 @@ const ProductPage = () => {
   const { currency, addToCart } = useContext(shopContext);
 
   const { data: product, isLoading, isError, error } = useProductById(productId);
-
-  const [selectedImage, setSelectedImage] = useState('');
   const [quantity, setQuantity] = useState(1);
 
   if (isLoading) {
@@ -28,95 +28,22 @@ const ProductPage = () => {
     ? [product.images]
     : [];
 
-  const mainImage = selectedImage || images[0] || '/placeholder.jpg';
-
   return (
     <div className="container py-10 border-t">
       <div className="flex flex-col sm:flex-row gap-10">
-        {/* Images Section */}
-        <div className="flex-1 flex flex-col-reverse sm:flex-row gap-4">
-          {/* Thumbnails */}
-          <div className="flex sm:flex-col gap-3 overflow-x-auto sm:overflow-y-auto sm:w-[20%]">
-            {images.map((img, index) => {
-              const isActive = selectedImage
-                ? selectedImage === img
-                : index === 0;
-              return (
-                <img
-                  key={index}
-                  src={img}
-                  alt={`Thumbnail ${index}`}
-                  onClick={() => setSelectedImage(img)}
-                  className={`w-[100px] h-[100px] object-cover rounded border-2 cursor-pointer transition-all ${
-                    isActive ? 'border-primary' : 'border-gray-300'
-                  }`}
-                />
-              );
-            })}
-          </div>
+        <ImageGallery images={images} productName={product.name} />
 
-          {/* Main Image */}
-          <div className="w-full sm:w-[80%]">
-            <img
-              src={mainImage}
-              alt={product.name}
-              className="w-full h-auto object-cover rounded"
-            />
-          </div>
-        </div>
-
-        {/* Product Info */}
-        <div className="flex-1">
-          <h1 className="text-2xl font-semibold">{product.name}</h1>
-          <p className="mt-4 text-gray-600">{product.description}</p>
-          <p className="mt-4 text-2xl font-bold">
-            {currency}
-            {product.price}
-          </p>
-
-          {/* Quantity Selector */}
-          <div className="flex items-center gap-4 mt-5">
-            <button
-              onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              className="border px-3 py-1"
-            >
-              -
-            </button>
-            <span>{quantity}</span>
-            <button
-              onClick={() => setQuantity((q) => q + 1)}
-              className="border px-3 py-1"
-            >
-              +
-            </button>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex gap-4 mt-6">
-            <button
-              onClick={() => addToCart(product.id, quantity)}
-              className="bg-gray-800 text-white px-6 py-3"
-            >
-              ADD TO CART
-            </button>
-            <button
-              onClick={() => {
-                addToCart(product.id, quantity);
-                navigate('/checkout');
-              }}
-              className="bg-black text-white px-6 py-3"
-            >
-              BUY NOW
-            </button>
-          </div>
-
-          {/* Info Text */}
-          <div className="mt-8 text-sm text-gray-500 space-y-1">
-            <p>✅ 100% Original Product</p>
-            <p>✅ Cash On Delivery is available</p>
-            <p>✅ Easy return and exchange policy within 7 days</p>
-          </div>
-        </div>
+        <ProductInfo
+          product={product}
+          currency={currency}
+          quantity={quantity}
+          setQuantity={setQuantity}
+          onAddToCart={() => addToCart(product.id, quantity)}
+          onBuyNow={() => {
+            addToCart(product.id, quantity);
+            navigate('/checkout');
+          }}
+        />
       </div>
 
       {/* Description & Reviews */}
