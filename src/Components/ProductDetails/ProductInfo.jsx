@@ -11,7 +11,7 @@ const ProductInfo = ({ product, currency, quantity, setQuantity, onAddToCart, on
       </p>
 
       {/* Quantity */}
-      <div className="flex items-center gap-4 mt-5">
+      <div className="flex items-center gap-4">
         <button onClick={() => setQuantity((q) => Math.max(1, q - 1))} className="border px-3 py-1">
           -
         </button>
@@ -23,10 +23,10 @@ const ProductInfo = ({ product, currency, quantity, setQuantity, onAddToCart, on
 
       {/* Actions */}
       <div className="flex gap-4 mt-6">
-        <button onClick={onAddToCart} className="bg-gray-800 text-white px-6 py-3">
+        <button onClick={onAddToCart} className="bg-gray-800 text-white px-6 py-3 rounded-md">
           ADD TO CART
         </button>
-        <button onClick={onBuyNow} className="bg-black text-white px-6 py-3">
+        <button onClick={onBuyNow} className="bg-black text-white px-6 py-3 rounded-md">
           BUY NOW
         </button>
       </div>

@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import { registerLists } from '../../constant/auth';
-import AuthLayout from '../../Components/layouts/AuthLayout';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { registerSchema } from '../../Schema/authSchema';
-import CustomInput from '../../Components/CustomInput';
-import { useAuth } from '../../hooks/useAuth';
-import { signUpApi } from '../../services/auth';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+
+import { registerLists } from '../../constant/auth';
+import AuthLayout from '../../Components/layouts/AuthLayout';
+import CustomInput from '../../Components/CustomInput';
+import { registerSchema } from '../../Schema/authSchema';
+import { useAuth } from '../../hooks/useAuth';
+import { signUpApi } from '../../services/auth';
 
 const defaultValues = {
   name: '',
@@ -17,11 +19,10 @@ const defaultValues = {
   password_confirmation: '',
 };
 
-
 const RegistrationPage = () => {
-  const [loading, setLoading] = useState(false);
   const { setUser } = useAuth();
   const navigate = useNavigate();
+
 
   const {
     register,
@@ -33,25 +34,28 @@ const RegistrationPage = () => {
     defaultValues,
   });
 
-  const onSubmit = async (data) => {
-   const payload = {
-  name: data.name,
-  email: data.email,
-  password: data.password,
-};
-
-    setLoading(true);
-    try {
-      const response = await signUpApi(payload);
+  const mutation = useMutation({
+    mutationFn: async (data) => {
+      const payload = {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      };
+      return await signUpApi(payload);
+    },
+    onSuccess: (response) => {
       toast.success('User registered successfully!');
       setUser(response);
       reset();
       navigate('/dashboard');
-    } catch (error) {
-      toast.error(error.message);
-    } finally {
-      setLoading(false);
-    }
+    },
+    onError: (error) => {
+      toast.error(error?.message || 'Registration failed');
+    },
+  });
+
+  const onSubmit = (data) => {
+    mutation.mutate(data);
   };
 
   return (
@@ -63,7 +67,7 @@ const RegistrationPage = () => {
         textLink="/auth/login"
       >
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {registerLists?.map(({ label, type, name, placeholder }) => (
+          {registerLists.map(({ label, type, name, placeholder }) => (
             <CustomInput
               key={name}
               type={type}
@@ -77,12 +81,12 @@ const RegistrationPage = () => {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={mutation.isLoading}
             className={`w-full px-4 py-3 font-semibold text-white bg-primary rounded-lg focus:ring-2 focus:ring-primary focus:outline-none ${
-              loading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-primary/70'
+              mutation.isLoading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-primary/70'
             }`}
           >
-            {loading ? 'Registering...' : 'Register'}
+            {mutation.isLoading ? 'Registering...' : 'Register'}
           </button>
         </form>
       </AuthLayout>

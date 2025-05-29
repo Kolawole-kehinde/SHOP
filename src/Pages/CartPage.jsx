@@ -49,9 +49,9 @@ const CartPage = () => {
                 <div className="flex items-start gap-6">
                   <img
                     src={
-                      Array.isArray(productData.image)
-                        ? productData.image[0]
-                        : productData.image
+                      Array.isArray(productData.images)
+                        ? productData.images[0]
+                        : productData.images
                     }
                     alt={productData.name}
                     className="w-16 sm:w-20 object-cover"

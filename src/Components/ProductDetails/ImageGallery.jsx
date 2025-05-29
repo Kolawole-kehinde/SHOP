@@ -15,8 +15,8 @@ const ImageGallery = ({ images = [], productName }) => {
               src={img}
               alt={`Thumbnail ${index}`}
               onClick={() => setSelectedImage(img)}
-              className={`w-[60px] h-[60px] object-cover rounded border-2 cursor-pointer transition-all ${
-                isActive ? 'border-green-600' : 'border-gray-300'
+              className={`w-[100px] h-[100px] object-cover rounded border-2 cursor-pointer transition-all ${
+                isActive ? 'border-primary' : 'border-gray-300'
               }`}
             />
           );
@@ -24,7 +24,7 @@ const ImageGallery = ({ images = [], productName }) => {
       </div>
 
       {/* Main image */}
-      <div className="w-full sm:w-[80%]">
+      <div className="w-full sm:w-[80%] -mt-4 sm:-mt-0">
         <img
           src={selectedImage || '/placeholder.jpg'}
           alt={productName}
