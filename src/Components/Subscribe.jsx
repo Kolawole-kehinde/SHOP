@@ -21,7 +21,7 @@ const Subscribe = () => {
 
                 <button 
                 type='submit'
-                className='bg-black text-white text-xs px-10 py-5 dark:bg-brandGreen text-white'
+                className='bg-black text-white text-xs px-10 py-5 dark:bg-brandGreen'
                 >
                   SUBSCRIBE
                 </button>
