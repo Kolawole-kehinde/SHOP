@@ -1,4 +1,4 @@
-// src/Pages/ProductPage.jsx
+
 import React, { useState, useContext, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -11,7 +11,7 @@ const fetchProductById = async (id) => {
   const { data, error } = await supabase
     .from("products")
     .select("*")
-    .eq("id", id) // id is UUID string, no parseInt
+    .eq("id", id)
     .single();
 
   if (error) {
