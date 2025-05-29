@@ -1,13 +1,17 @@
-
 import { createContext, useEffect, useState } from "react";
-import { products } from "../assets/asset";
 import LocalStorageService from "../utils/HandleLocalStorage";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { useProducts } from "../hooks/useProducts";
+import { supabase } from "../lib/supabaseClient";
 
 export const shopContext = createContext({
-   user: null,
+  user: null,
   setUser: () => {},
   handleLogout: () => {},
+  products: [],
+  isProductsLoading: false,
+  productsError: null,
 });
 
 const ShopContextProvider = (props) => {
@@ -16,16 +20,17 @@ const ShopContextProvider = (props) => {
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
-  const { getItem, setItem, clear } = LocalStorageService;
-  
-  const [user, setUser] = useState(getItem("auth") || null);
+  const [user, setUser] = useState(LocalStorageService.getItem("auth") || null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Fetch products using React Query
+  const { data: products = [], isLoading: isProductsLoading, error: productsError } = useProducts();
+
   useEffect(() => {
-    if (user) setItem("auth", user);
+    if (user) LocalStorageService.setItem("auth", user);
   }, [user]);
 
-  // Add to Cart Function (with quantity)
   const addToCart = (itemId, quantity = 1) => {
     setCartItems((prevCart) => {
       const updatedCart = { ...prevCart };
@@ -41,24 +46,26 @@ const ShopContextProvider = (props) => {
   const getCartCount = () => {
     return Object.values(cartItems).reduce((acc, quantity) => acc + quantity, 0);
   };
-    // Handle user logout
+
   const handleLogout = async () => {
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signOut(); 
+      const { error } = await supabase.auth.signOut();
       if (error) throw error;
       setUser(null);
-      clear(); 
-      navigate("/auth/login"); 
+      LocalStorageService.clear();
+      navigate("/auth/login");
     } catch (error) {
       toast.error(error.message);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
   const value = {
     products,
+    isProductsLoading,
+    productsError,
     currency,
     delivery_fee,
     search,
@@ -70,7 +77,7 @@ const ShopContextProvider = (props) => {
     getCartCount,
     user,
     setUser,
-    handleLogout
+    handleLogout,
   };
 
   return <shopContext.Provider value={value}>{props.children}</shopContext.Provider>;

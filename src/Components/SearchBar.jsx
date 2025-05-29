@@ -1,22 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import { CiSearch } from "react-icons/ci";
 import { RxCross2 } from "react-icons/rx";
 import { useLocation } from 'react-router-dom';
-import { shopContext } from '../Context/ShopContext';
 
-const SearchBar = () => {
-  const { search, setSearch, showSearch, setShowSearch } = useContext(shopContext);
-  const [visible, setVisible] = useState(false);
+const SearchBar = ({ search, setSearch, showSearch, setShowSearch }) => {
   const location = useLocation();
 
-  useEffect(() => {
-    if (location.pathname === '/shop') {
-      setVisible(true);
-    } else {
-      setVisible(false);
-      setShowSearch(false);
-    }
-  }, [location, setShowSearch]);
+  const visible = location.pathname === '/shop';
 
   if (!showSearch || !visible) return null;
 
@@ -34,7 +24,10 @@ const SearchBar = () => {
       </div>
       <RxCross2
         className='w-4 cursor-pointer'
-        onClick={() => setShowSearch(false)}
+        onClick={() => {
+          setSearch('');
+          setShowSearch(false);
+        }}
       />
     </div>
   );
