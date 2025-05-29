@@ -1,31 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import { shopContext } from '../Context/ShopContext';
 import RelatedProducts from '../Components/RelatedProducts';
-import { supabase } from '../lib/supabaseClient';
-
-const fetchProductById = async (id) => {
-  const { data, error } = await supabase
-    .from('products')
-    .select('*')
-    .eq('id', id)
-    .single();
-
-  if (error) throw new Error(error.message);
-  return data;
-};
+import { useProductById } from '../hooks/useProducts';
 
 const ProductPage = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const { currency, addToCart } = useContext(shopContext);
 
-  const { data: product, isLoading, isError, error } = useQuery({
-    queryKey: ['product', productId],
-    queryFn: () => fetchProductById(productId),
-    enabled: !!productId,
-  });
+  const { data: product, isLoading, isError, error } = useProductById(productId);
 
   const [selectedImage, setSelectedImage] = useState('');
   const [quantity, setQuantity] = useState(1);
@@ -50,22 +34,28 @@ const ProductPage = () => {
     <div className="container py-10 border-t">
       <div className="flex flex-col sm:flex-row gap-10">
         {/* Images Section */}
-        <div className="flex-1 flex flex-col-reverse sm:flex-row gap-3">
-          <div className="flex sm:flex-col gap-2 sm:space-y-2 overflow-x-auto sm:overflow-y-auto sm:w-[20%]">
+        <div className="flex-1 flex flex-col-reverse sm:flex-row gap-4">
+          {/* Thumbnails */}
+          <div className="flex sm:flex-col gap-3 overflow-x-auto sm:overflow-y-auto sm:w-[20%]">
             {images.map((img, index) => {
-              const isActive = selectedImage === img || (!selectedImage && index === 0);
+              const isActive = selectedImage
+                ? selectedImage === img
+                : index === 0;
               return (
                 <img
                   key={index}
                   src={img}
                   alt={`Thumbnail ${index}`}
-                  className={`w-[100px] h-[100px] object-cover cursor-pointer rounded-md border transition-all duration-200
-                    ${isActive ? 'border-green-600 shadow-md' : 'border-gray-300 hover:border-black'}`}
                   onClick={() => setSelectedImage(img)}
+                  className={`w-[100px] h-[100px] object-cover rounded border-2 cursor-pointer transition-all ${
+                    isActive ? 'border-primary' : 'border-gray-300'
+                  }`}
                 />
               );
             })}
           </div>
+
+          {/* Main Image */}
           <div className="w-full sm:w-[80%]">
             <img
               src={mainImage}
@@ -75,8 +65,8 @@ const ProductPage = () => {
           </div>
         </div>
 
-        {/* Product Details */}
-        <div className="flex-1 mt-8 sm:mt-0">
+        {/* Product Info */}
+        <div className="flex-1">
           <h1 className="text-2xl font-semibold">{product.name}</h1>
           <p className="mt-4 text-gray-600">{product.description}</p>
           <p className="mt-4 text-2xl font-bold">
@@ -102,7 +92,7 @@ const ProductPage = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-wrap gap-4 mt-6">
+          <div className="flex gap-4 mt-6">
             <button
               onClick={() => addToCart(product.id, quantity)}
               className="bg-gray-800 text-white px-6 py-3"
@@ -120,7 +110,7 @@ const ProductPage = () => {
             </button>
           </div>
 
-          {/* Trust Info */}
+          {/* Info Text */}
           <div className="mt-8 text-sm text-gray-500 space-y-1">
             <p>✅ 100% Original Product</p>
             <p>✅ Cash On Delivery is available</p>
@@ -147,10 +137,7 @@ const ProductPage = () => {
         </div>
       </div>
 
-      <RelatedProducts
-        category={product.category}
-        subCategory={product.subCategory}
-      />
+      <RelatedProducts category={product.category} subCategory={product.subCategory} />
     </div>
   );
 };
