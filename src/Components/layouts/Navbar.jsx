@@ -4,7 +4,10 @@ import { BiMenuAltRight } from "react-icons/bi";
 import Logo from "./Logo";
 import { IoClose } from "react-icons/io5";
 import Menu from "./Menu";
-import { Link } from "react-router-dom";
+import CustomButton from "../CustomButton";
+import { useAuth } from "../../hooks/useAuth";
+import AuthMenu from "./AuthMenu";
+
 
 const NavBar = () => {
   const [openMenu, SetOpenMenu] = useState(false);
@@ -12,6 +15,7 @@ const NavBar = () => {
   const toggleMenu = () => {
     return SetOpenMenu((prev) => !prev);
   };
+  const {user} =useAuth();
   return (
     <header className=" bg-white dark:bg-gray-900 py-4 dark:text-white duration-200 relative">
       <nav className="container flex justify-between items-center">
@@ -21,8 +25,17 @@ const NavBar = () => {
 
         {/* Right Section */}
 
-          <NavRight />
-        
+            <div className="flex items-center gap-4">
+              <NavRight />
+              {user ? (
+                <AuthMenu />
+              ) : (
+                <CustomButton>
+                  Sign In
+                </CustomButton>
+              )}
+            </div>
+
           <button className="lg:hidden block" onClick={toggleMenu}>
             <BiMenuAltRight fontSize={30} />
           </button>

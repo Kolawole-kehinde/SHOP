@@ -1,9 +1,9 @@
+// pages/LoginPage.jsx
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-
 import { loginLists } from "../../constant/auth";
 import CustomInput from "../../Components/CustomInput";
 import AuthLayout from "../../Components/layouts/AuthLayout";
@@ -28,28 +28,26 @@ const LoginPage = () => {
   } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues,
+    mode: "onSubmit",
   });
 
   const mutation = useMutation({
-    mutationFn: async (data) => {
-      const payload = {
-        email: data.email,
-        password: data.password,
-      };
-      return await signInApi(payload);
-    },
-    onSuccess: (response) => {
+    mutationFn: signInApi,
+    onSuccess: (userData) => {
       toast.success("User logged in successfully!");
-      setUser(response);
+      console.log("Returned user data:", userData);
+      setUser(userData);
       reset();
-      navigate("/dashboard");
+      navigate("/");
     },
     onError: (error) => {
+      console.error("Login failed:", error);
       toast.error(error?.message || "Login failed. Please try again.");
     },
   });
 
   const onSubmit = (data) => {
+    console.log("Submitting form with data:", data);
     mutation.mutate(data);
   };
 
@@ -60,6 +58,13 @@ const LoginPage = () => {
       subtext="Register"
       textLink="/auth/register"
     >
+      {/* Show validation errors (debug) */}
+      {Object.keys(errors).length > 0 && (
+        <div className="text-red-500 bg-red-100 p-2 rounded">
+          Validation Errors: {JSON.stringify(errors)}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {loginLists.map(({ label, type, name, placeholder }) => (
           <CustomInput
@@ -77,7 +82,9 @@ const LoginPage = () => {
           type="submit"
           disabled={mutation.isLoading}
           className={`w-full px-4 py-3 font-semibold text-white bg-primary rounded-lg focus:ring-2 focus:ring-primary focus:outline-none ${
-            mutation.isLoading ? "opacity-70 cursor-not-allowed" : "hover:bg-primary/70"
+            mutation.isLoading
+              ? "opacity-70 cursor-not-allowed"
+              : "hover:bg-primary/70"
           }`}
         >
           {mutation.isLoading ? "Logging in..." : "Login"}

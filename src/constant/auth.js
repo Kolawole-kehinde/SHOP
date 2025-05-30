@@ -1,9 +1,9 @@
 export const loginLists = [
     {
-      label: "Username",
-      name: "name",
-      type: "text",
-      placeholder: "Username",
+      label: "Email",
+      name: "email",
+      type: "email",
+      placeholder: "Email",
     },
     {
       label: "Password",

@@ -34,28 +34,37 @@ export const signUpApi = async (payload) => {
 };
 
 // SIGN IN
-export const signInApi = async (payload) => {
-  const { email, password } = payload;
+
+export const signInApi = async ({ email, password }) => {
+  console.log("Calling Supabase sign-in...");
 
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
-  if (error) throw new Error(error.message);
+  if (error) {
+    console.error("Supabase auth error:", error.message);
+    throw new Error(error.message);
+  }
 
   const user = data?.user;
+  if (!user) {
+    throw new Error("User not found after login.");
+  }
 
-  if (!user) throw new Error("User not found after login.");
-
-  // Fetch user info from 'users' table
   const { data: userData, error: userError } = await supabase
     .from("users")
-    .select()
+    .select("*")
     .eq("user_id", user.id)
     .single();
 
-  if (userError) throw new Error(userError.message);
+  if (userError) {
+    console.error("Fetching user data failed:", userError.message);
+    throw new Error(userError.message);
+  }
 
+  console.log("Fetched user data:", userData);
   return userData;
 };
+

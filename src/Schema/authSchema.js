@@ -14,18 +14,6 @@ export const registerSchema = z
   });
 
 export const loginSchema = z.object({
-  name: z
-    .string()
-    .min(6, { message: "Username must be more than 5 characters" }),
-
-  password: z
-    .string()
-    .min(6, { message: "Password must be more than 5 characters" })
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-      {
-        message:
-          "Password must contain at least one uppercase, one lowercase, one number, and one special character",
-      }
-    ),
+  email: z.string().email({ message: "Invalid email address" }),
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });

@@ -9,8 +9,8 @@ const Menu = ({menuStyle, toggleMenu}) => {
   return (
     <>
         <menu className={menuStyle} >
-                 {
-            navRoutes.map(({name, path, id}) => (
+          
+                 {navRoutes.map(({name, path, id}) => (
              <li key={id}>
                 <NavLink
                 to={path}

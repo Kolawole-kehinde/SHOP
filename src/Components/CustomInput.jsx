@@ -3,31 +3,37 @@ import { FaEyeSlash, FaRegEye } from "react-icons/fa";
 
 const CustomInput = ({ label, type, name, register, error, placeholder }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const isPassword = type === "password";
 
-  const togglePassword = () => {
-    setShowPassword((prevState) => !prevState);
-  };
+  const inputType = isPassword && showPassword ? "text" : type;
 
   return (
     <div className="mb-4">
-      <label className="block text-sm font-medium text-gray-700">{label}</label>
+      {label && (
+        <label htmlFor={name} className="block text-sm font-medium text-gray-700">
+          {label}
+        </label>
+      )}
       <div className="relative">
         <input
-          type={showPassword && type === "password" ? "text" : type}
+          id={name}
+          type={inputType}
           {...register(name)}
           placeholder={placeholder}
-          className="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none pr-10"
+          className={`w-full p-3 mt-1 border rounded-lg pr-10 focus:ring-2 focus:outline-none ${
+            error ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+          }`}
         />
-        {type === "password" && (
+        {isPassword && (
           <div
             className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500"
-            onClick={togglePassword}
+            onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? <FaRegEye /> : <FaEyeSlash />}
           </div>
         )}
       </div>
-      {error && <span className="text-red-500 text-sm">{error.message}</span>}
+      {error && <p className="text-sm text-red-500 mt-1">{error.message}</p>}
     </div>
   );
 };

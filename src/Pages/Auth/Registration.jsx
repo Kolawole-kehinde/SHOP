@@ -47,7 +47,7 @@ const RegistrationPage = () => {
       toast.success('User registered successfully!');
       setUser(response);
       reset();
-      navigate('/dashboard');
+      navigate('/');
     },
     onError: (error) => {
       toast.error(error?.message || 'Registration failed');

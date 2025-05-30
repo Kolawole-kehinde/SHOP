@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import LocalStorageService from "../utils/HandleLocalStorage";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
@@ -20,22 +20,34 @@ const ShopContextProvider = (props) => {
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
-  const [user, setUser] = useState(LocalStorageService.getItem("auth") || null);
+
+  // Destructure LocalStorageService methods BEFORE using them
+  const { getItem, setItem, clear } = LocalStorageService;
+
+  // Initialize user state from localStorage
+  const [user, setUser] = useState(getItem("auth") || null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Fetch products using React Query
+  // Fetch products using your custom React Query hook
   const { data: products = [], isLoading: isProductsLoading, error: productsError } = useProducts();
 
+  // Sync user state to localStorage whenever it changes
   useEffect(() => {
-    if (user) LocalStorageService.setItem("auth", user);
-  }, [user]);
+    if (user) {
+      setItem("auth", user);
+    } else {
+      // If user is null (logged out), clear auth from localStorage
+      LocalStorageService.removeItem("auth");
+    }
+  }, [user, setItem]);
 
+  // Add items to cart
   const addToCart = (itemId, quantity = 1) => {
     setCartItems((prevCart) => {
       const updatedCart = { ...prevCart };
       if (!updatedCart[itemId]) {
-        updatedCart[itemId] = quantity;
+        updatedCart[itemId] = quantity;git
       } else {
         updatedCart[itemId] += quantity;
       }
@@ -43,17 +55,19 @@ const ShopContextProvider = (props) => {
     });
   };
 
+  // Get total quantity in cart
   const getCartCount = () => {
     return Object.values(cartItems).reduce((acc, quantity) => acc + quantity, 0);
   };
 
+  // Logout handler
   const handleLogout = async () => {
     setLoading(true);
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       setUser(null);
-      LocalStorageService.clear();
+      clear(); // clear localStorage completely
       navigate("/auth/login");
     } catch (error) {
       toast.error(error.message);
@@ -78,6 +92,7 @@ const ShopContextProvider = (props) => {
     user,
     setUser,
     handleLogout,
+    loading,
   };
 
   return <shopContext.Provider value={value}>{props.children}</shopContext.Provider>;
