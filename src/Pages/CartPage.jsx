@@ -1,16 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import Tittle from "../Components/Tittle";
-import { shopContext } from "../Context/ShopContext";
-import { FaTrash } from "react-icons/fa";
+import { ShopContext } from "../Context/ShopContext";
+import { CartContext } from "../Context/CartContext";
+import CartItem from "../Components/cart/CartItem";
+import CartSummary from "../Components/cart/CartSummary";
 
 const CartPage = () => {
-  const {
-    products,
-    currency,
-    cartItems,
-    removeFromCart,
-    updateCartItemQuantity,
-  } = useContext(shopContext);
+  const { products, currency } = useContext(ShopContext);
+  const { cartItems, removeFromCart, updateCartItemQuantity } = useContext(CartContext);
 
   const [cartData, setCartData] = useState([]);
 
@@ -37,10 +34,6 @@ const CartPage = () => {
     }
   };
 
-  const handleRemove = (productId) => {
-    removeFromCart(productId);
-  };
-
   const subtotal = cartData.reduce((acc, item) => {
     const product = products.find((p) => p.id.toString() === item.id.toString());
     return acc + (product ? product.price * item.quantity : 0);
@@ -59,92 +52,29 @@ const CartPage = () => {
         <p className="text-center text-gray-500 py-8">Your cart is empty.</p>
       ) : (
         <>
-          {cartData.map((item, index) => {
-            const product = products.find((p) => p.id.toString() === item.id.toString());
+          {cartData.map(({ id, quantity }) => {
+            const product = products.find((p) => p.id.toString() === id.toString());
             if (!product) return null;
 
             return (
-              <div
-                key={index}
-                className="py-4 border-b flex justify-between items-center text-gray-700"
-              >
-                <div className="flex items-center gap-4">
-                  <img
-                    src={Array.isArray(product.images) ? product.images[0] : product.images}
-                    alt={product.name}
-                    className="w-16 sm:w-20 object-cover"
-                  />
-                  <div>
-                    <p className="text-sm sm:text-base font-medium">{product.name}</p>
-                    <p className="text-sm text-gray-500">
-                      {currency}
-                      {product.price}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      Size: {product.size || "S"}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => handleQuantityChange(item.id, "dec")}
-                    className="w-8 h-8 text-lg border rounded hover:bg-gray-100"
-                  >
-                    −
-                  </button>
-                  <span className="w-8 text-center">{item.quantity}</span>
-                  <button
-                    onClick={() => handleQuantityChange(item.id, "inc")}
-                    className="w-8 h-8 text-lg border rounded hover:bg-gray-100"
-                  >
-                    +
-                  </button>
-                </div>
-
-                <button
-                  onClick={() => handleRemove(item.id)}
-                  className="text-red-500 hover:text-red-700"
-                >
-                  <FaTrash />
-                </button>
-              </div>
+              <CartItem
+                key={id}
+                product={product}
+                quantity={quantity}
+                currency={currency}
+                onIncrement={() => handleQuantityChange(id, "inc")}
+                onDecrement={() => handleQuantityChange(id, "dec")}
+                onRemove={() => removeFromCart(id)}
+              />
             );
           })}
 
-          {/* Cart Summary */}
-          <div className="mt-10 max-w-sm ml-auto border space-y-6 p-4 rounded-md shadow-sm">
-            <h3 className="text-xl font-semibold border-b pb-2 mb-4">CART TOTALS</h3>
-            <div className="flex justify-between mb-2 text-sm">
-              <span>Subtotal</span>
-              <span>
-                {currency}
-                {subtotal.toFixed(2)}
-              </span>
-            </div>
-            <div className="flex justify-between mb-2 text-sm">
-              <span>Shipping Fee</span>
-              <span>
-                {currency}
-                {shippingFee.toFixed(2)}
-              </span>
-            </div>
-            <div className="flex justify-between font-bold text-base mb-4">
-              <span>Total</span>
-              <span>
-                {currency}
-                {total.toFixed(2)}
-              </span>
-            </div>
-
-            {/* ✅ Proceed to Checkout Button */}
-            <button
-              onClick={() => alert("Redirect to checkout page")}
-              className="w-full bg-black text-white py-4 rounded hover:bg-gray-800 transition"
-            >
-              Proceed to Checkout
-            </button>
-          </div>
+          <CartSummary
+            currency={currency}
+            subtotal={subtotal}
+            shippingFee={shippingFee}
+            total={total}
+          />
         </>
       )}
     </section>

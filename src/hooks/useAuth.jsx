@@ -1,7 +1,8 @@
 import { useContext } from "react"
-import { shopContext } from "../Context/ShopContext"
+import { ShopContext } from "../Context/ShopContext"
+
 
 
 export const useAuth = () =>{
-    return useContext(shopContext)
+    return useContext(ShopContext)
 }

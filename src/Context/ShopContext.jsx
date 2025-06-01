@@ -5,18 +5,20 @@ import { toast } from "react-hot-toast";
 import { useProducts } from "../hooks/useProducts";
 import { supabase } from "../lib/supabaseClient";
 
-export const shopContext = createContext({
+export const ShopContext = createContext({
   user: null,
   setUser: () => {},
   handleLogout: () => {},
   products: [],
   isProductsLoading: false,
   productsError: null,
-  cartItems: {},
-  addToCart: () => {},
-  updateCartItemQuantity: () => {},
-  removeFromCart: () => {},
-  getCartCount: () => 0,
+  currency: "$",
+  delivery_fee: 10,
+  search: "",
+  setSearch: () => {},
+  showSearch: false,
+  setShowSearch: () => {},
+  loading: false,
 });
 
 const ShopContextProvider = (props) => {
@@ -31,21 +33,11 @@ const ShopContextProvider = (props) => {
 
   const [user, setUser] = useState(getItem("auth") || null);
 
-  const [cartItems, setCartItems] = useState(() => {
-    const storedCart = getItem("cart");
-    return storedCart && typeof storedCart === "object" ? storedCart : {};
-  });
-
   const {
     data: products = [],
     isLoading: isProductsLoading,
     error: productsError,
   } = useProducts();
-
-  // Save cart to localStorage when it changes
-  useEffect(() => {
-    setItem("cart", cartItems);
-  }, [cartItems, setItem]);
 
   // Sync user state with localStorage
   useEffect(() => {
@@ -55,37 +47,6 @@ const ShopContextProvider = (props) => {
       removeItem("auth");
     }
   }, [user, setItem]);
-
-  const addToCart = (itemId, quantity = 1) => {
-    setCartItems((prev) => {
-      const updated = { ...prev };
-      updated[itemId] = (updated[itemId] || 0) + quantity;
-      return updated;
-    });
-  };
-
-  const updateCartItemQuantity = (itemId, newQuantity) => {
-    setCartItems((prev) => {
-      const updated = { ...prev };
-      if (newQuantity <= 0) {
-        delete updated[itemId];
-      } else {
-        updated[itemId] = newQuantity;
-      }
-      return updated;
-    });
-  };
-
-  const removeFromCart = (itemId) => {
-    setCartItems((prev) => {
-      const updated = { ...prev };
-      delete updated[itemId];
-      return updated;
-    });
-  };
-
-  const getCartCount = () =>
-    Object.values(cartItems).reduce((acc, qty) => acc + qty, 0);
 
   const handleLogout = async () => {
     setLoading(true);
@@ -115,18 +76,13 @@ const ShopContextProvider = (props) => {
     setSearch,
     showSearch,
     setShowSearch,
-    cartItems,
-    addToCart,
-    updateCartItemQuantity,
-    removeFromCart,
-    getCartCount,
     loading,
   };
 
   return (
-    <shopContext.Provider value={value}>
+    <ShopContext.Provider value={value}>
       {props.children}
-    </shopContext.Provider>
+    </ShopContext.Provider>
   );
 };
 

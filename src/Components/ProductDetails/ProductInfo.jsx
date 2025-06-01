@@ -1,6 +1,13 @@
-import React from 'react';
+import React from "react";
 
-const ProductInfo = ({ product, currency, quantity, setQuantity, onAddToCart, onBuyNow }) => {
+const ProductInfo = ({
+  product,
+  currency,
+  quantity,
+  setQuantity,
+  onAddToCart,
+  onBuyNow,
+}) => {
   return (
     <div className="flex-1">
       <h1 className="text-2xl font-semibold">{product.name}</h1>
@@ -11,22 +18,37 @@ const ProductInfo = ({ product, currency, quantity, setQuantity, onAddToCart, on
       </p>
 
       {/* Quantity */}
-      <div className="flex items-center gap-4">
-        <button onClick={() => setQuantity((q) => Math.max(1, q - 1))} className="border px-3 py-1">
+      <div className="flex items-center gap-4 mt-4">
+        <button
+          onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+          className="border px-3 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          aria-label="Decrease quantity"
+          disabled={quantity <= 1}
+        >
           -
         </button>
-        <span>{quantity}</span>
-        <button onClick={() => setQuantity((q) => q + 1)} className="border px-3 py-1">
+        <span className="text-lg font-medium">{quantity}</span>
+        <button
+          onClick={() => setQuantity((q) => q + 1)}
+          className="border px-3 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          aria-label="Increase quantity"
+        >
           +
         </button>
       </div>
 
       {/* Actions */}
       <div className="flex gap-4 mt-6">
-        <button onClick={onAddToCart} className="bg-gray-800 text-white px-6 py-3 rounded-md">
+        <button
+          onClick={onAddToCart}
+          className="bg-gray-800 text-white px-6 py-3 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-700"
+        >
           ADD TO CART
         </button>
-        <button onClick={onBuyNow} className="bg-black text-white px-6 py-3 rounded-md">
+        <button
+          onClick={onBuyNow}
+          className="bg-black text-white px-6 py-3 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-black"
+        >
           BUY NOW
         </button>
       </div>

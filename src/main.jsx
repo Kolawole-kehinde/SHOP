@@ -14,6 +14,7 @@ import {
 } from '@tanstack/react-query';
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { CartProvider } from './Context/CartContext.jsx';
 
 const queryClient = new QueryClient();
 
@@ -22,8 +23,10 @@ createRoot(document.getElementById('root')).render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <ShopContextProvider>
-          <Toaster />
-          <App />
+          <CartProvider>
+            <Toaster />
+            <App />
+          </CartProvider>
         </ShopContextProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />

@@ -1,15 +1,17 @@
 import React, { useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { shopContext } from '../Context/ShopContext';
 import { useProductById } from '../hooks/useProducts';
 import RelatedProducts from '../Components/RelatedProducts';
 import ImageGallery from '../Components/ProductDetails/ImageGallery';
 import ProductInfo from '../Components/ProductDetails/ProductInfo';
+import { ShopContext } from '../Context/ShopContext';
+import { CartContext } from '../Context/CartContext';
 
 const ProductPage = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
-  const { currency, addToCart } = useContext(shopContext);
+  const { currency } = useContext(ShopContext);
+  const { addToCart } = useContext(CartContext);
 
   const { data: product, isLoading, isError, error } = useProductById(productId);
   const [quantity, setQuantity] = useState(1);

@@ -1,13 +1,15 @@
 import React, { useContext, useState } from "react";
-import { shopContext } from "../Context/ShopContext";
 import ShippingForm from "../Components/CheckoutPage/ShippingForm";
 import PaymentInputs from "../Components/CheckoutPage/PaymentInputs.jsx.jsx";
 import OrderSummary from "../Components/CheckoutPage/OrderSummary.jsx";
 import SuccessModal from "../Components/modal/SuccessModal.jsx";
+import { ShopContext } from "../Context/ShopContext.jsx";
+import { CartContext } from "../Context/CartContext.jsx";
 
 
 const CheckoutPage = () => {
-  const { cartItems, products, currency, delivery_fee } = useContext(shopContext);
+  const { products, currency, delivery_fee } = useContext(ShopContext);
+  const { cartItems } = useContext(CartContext);
 
   const [billingSameAsShipping, setBillingSameAsShipping] = useState(true);
   const [paymentMethod, setPaymentMethod] = useState("credit");

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { shopContext } from '../Context/ShopContext';
 import { Link } from 'react-router-dom';
+import { ShopContext } from '../Context/ShopContext';
 
 export const ProductItem = ({ id, images, description, price,name, }) => {
-  const { currency } = useContext(shopContext);
+  const { currency } = useContext(ShopContext);
 
   return (
     <div>
