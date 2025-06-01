@@ -12,6 +12,11 @@ export const shopContext = createContext({
   products: [],
   isProductsLoading: false,
   productsError: null,
+  cartItems: {},
+  addToCart: () => {},
+  updateCartItemQuantity: () => {},
+  removeFromCart: () => {},
+  getCartCount: () => 0,
 });
 
 const ShopContextProvider = (props) => {
@@ -20,54 +25,79 @@ const ShopContextProvider = (props) => {
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
-
-  // Destructure LocalStorageService methods BEFORE using them
-  const { getItem, setItem, clear } = LocalStorageService;
-
-  // Initialize user state from localStorage
-  const [user, setUser] = useState(getItem("auth") || null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Fetch products using your custom React Query hook
-  const { data: products = [], isLoading: isProductsLoading, error: productsError } = useProducts();
+  const { getItem, setItem, clear, removeItem } = LocalStorageService;
 
-  // Sync user state to localStorage whenever it changes
+  const [user, setUser] = useState(getItem("auth") || null);
+
+  const {
+    data: products = [],
+    isLoading: isProductsLoading,
+    error: productsError,
+  } = useProducts();
+
+  // Load cart from localStorage on mount
+  useEffect(() => {
+    const storedCart = getItem("cart");
+    if (storedCart) {
+      setCartItems(storedCart);
+    }
+  }, []);
+
+  // Save cart to localStorage on change
+  useEffect(() => {
+    setItem("cart", cartItems);
+  }, [cartItems, setItem]);
+
+  // Sync user state with localStorage
   useEffect(() => {
     if (user) {
       setItem("auth", user);
     } else {
-      // If user is null (logged out), clear auth from localStorage
-      LocalStorageService.removeItem("auth");
+      removeItem("auth");
     }
   }, [user, setItem]);
 
-  // Add items to cart
   const addToCart = (itemId, quantity = 1) => {
-    setCartItems((prevCart) => {
-      const updatedCart = { ...prevCart };
-      if (!updatedCart[itemId]) {
-        updatedCart[itemId] = quantity;git
-      } else {
-        updatedCart[itemId] += quantity;
-      }
-      return updatedCart;
+    setCartItems((prev) => {
+      const updated = { ...prev };
+      updated[itemId] = (updated[itemId] || 0) + quantity;
+      return updated;
     });
   };
 
-  // Get total quantity in cart
-  const getCartCount = () => {
-    return Object.values(cartItems).reduce((acc, quantity) => acc + quantity, 0);
+  const updateCartItemQuantity = (itemId, newQuantity) => {
+    setCartItems((prev) => {
+      const updated = { ...prev };
+      if (newQuantity <= 0) {
+        delete updated[itemId];
+      } else {
+        updated[itemId] = newQuantity;
+      }
+      return updated;
+    });
   };
 
-  // Logout handler
+  const removeFromCart = (itemId) => {
+    setCartItems((prev) => {
+      const updated = { ...prev };
+      delete updated[itemId];
+      return updated;
+    });
+  };
+
+  const getCartCount = () =>
+    Object.values(cartItems).reduce((acc, qty) => acc + qty, 0);
+
   const handleLogout = async () => {
     setLoading(true);
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       setUser(null);
-      clear(); // clear localStorage completely
+      clear();
       navigate("/auth/login");
     } catch (error) {
       toast.error(error.message);
@@ -77,6 +107,9 @@ const ShopContextProvider = (props) => {
   };
 
   const value = {
+    user,
+    setUser,
+    handleLogout,
     products,
     isProductsLoading,
     productsError,
@@ -88,10 +121,9 @@ const ShopContextProvider = (props) => {
     setShowSearch,
     cartItems,
     addToCart,
+    updateCartItemQuantity,
+    removeFromCart,
     getCartCount,
-    user,
-    setUser,
-    handleLogout,
     loading,
   };
 
