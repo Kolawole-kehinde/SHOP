@@ -24,7 +24,6 @@ const ShopContextProvider = (props) => {
   const delivery_fee = 10;
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
-  const [cartItems, setCartItems] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -32,21 +31,18 @@ const ShopContextProvider = (props) => {
 
   const [user, setUser] = useState(getItem("auth") || null);
 
+  const [cartItems, setCartItems] = useState(() => {
+    const storedCart = getItem("cart");
+    return storedCart && typeof storedCart === "object" ? storedCart : {};
+  });
+
   const {
     data: products = [],
     isLoading: isProductsLoading,
     error: productsError,
   } = useProducts();
 
-  // Load cart from localStorage on mount
-  useEffect(() => {
-    const storedCart = getItem("cart");
-    if (storedCart) {
-      setCartItems(storedCart);
-    }
-  }, []);
-
-  // Save cart to localStorage on change
+  // Save cart to localStorage when it changes
   useEffect(() => {
     setItem("cart", cartItems);
   }, [cartItems, setItem]);
@@ -127,7 +123,11 @@ const ShopContextProvider = (props) => {
     loading,
   };
 
-  return <shopContext.Provider value={value}>{props.children}</shopContext.Provider>;
+  return (
+    <shopContext.Provider value={value}>
+      {props.children}
+    </shopContext.Provider>
+  );
 };
 
 export default ShopContextProvider;
