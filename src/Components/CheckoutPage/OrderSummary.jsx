@@ -1,5 +1,3 @@
-import React from "react";
-
 const OrderSummary = ({
   subtotal = 0,
   total = 0,
@@ -10,10 +8,8 @@ const OrderSummary = ({
   delivery_fee = 0,
   isFormValid = false,
 }) => {
-  const isDisabled = isProcessing || !isFormValid;
-
   return (
-    <section className="w-full mt-6 h-[400px]">
+    <section className="w-full mt-12 h-[400px]">
       <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6">
         <h3 className="text-xl font-semibold mb-6 text-gray-800">Order Summary</h3>
 
@@ -51,10 +47,10 @@ const OrderSummary = ({
 
         <button
           onClick={onPlaceOrder}
-          disabled={isDisabled}
+          disabled={isProcessing || !isFormValid}
           className={`mt-6 w-full text-sm py-3 rounded-xl font-medium text-white ${
-            isDisabled
-              ? "bg-gray-300 cursor-not-allowed"
+            isProcessing || !isFormValid
+              ? "bg-gray-400 cursor-not-allowed"
               : "bg-primary hover:bg-primary/90 transition duration-300"
           }`}
         >
