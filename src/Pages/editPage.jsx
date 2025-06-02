@@ -129,8 +129,8 @@ const EditProfile = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full rounded-md bg-blue-600 text-white py-3 font-semibold
-                        hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600
+            className={`w-full rounded-md bg-primary text-white py-3 font-semibold
+                        hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-blue-600
                         disabled:opacity-60 disabled:cursor-not-allowed transition`}
           >
             {loading ? "Saving..." : "Update Profile"}
