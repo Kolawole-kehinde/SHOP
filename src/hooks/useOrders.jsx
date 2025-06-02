@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { supabase } from '../lib/supabaseClient';
@@ -21,21 +20,19 @@ export const useOrders = (userId) => {
           order_status,
           order_items (
             id,
-            quantity,
             product_id,
-            product:fk_order_items_product (
-              name,
-              price,
-              image_url
-            )
+            product_name,
+            quantity,
+            price,
+            total_price
           )
         `)
         .eq('user_id', userId)
         .order('created_at', { ascending: false });
 
       if (error) {
-        setError('Error fetching orders');
-        console.error(error);
+        setError(error.message || 'Error fetching orders');
+        console.error('Supabase fetch error:', error);
       } else {
         setOrders(data || []);
       }
@@ -71,6 +68,7 @@ export const useOrders = (userId) => {
     orders,
     loading,
     error,
-    setOrders,
-    cancelOrder };
+    cancelOrder,
+    setOrders
+  };
 };

@@ -13,6 +13,8 @@ import CartPage from "./Pages/CartPage";
 import RegistrationPage from "./Pages/Auth/Registration";
 import CheckoutPage from "./Pages/CheckoutPage";
 import ProtectedRoute from "./Components/ProtectedRoutes/ProtectedRoute";
+import OrdersList from "./Pages/OrdersList ";
+import OrderDetails from "./Pages/OrderDetails";
 
 
 const App = () => {
@@ -38,6 +40,8 @@ const App = () => {
         <Route element={<ProtectedRoute />}>
           <Route path="cart" element={<CartPage />} />
           <Route path="checkout" element={<CheckoutPage />} />
+           <Route path="orders" element={<OrdersList />} />
+        <Route path="orders/:orderId" element={<OrderDetails />} />
   
         </Route>
       </Routes>
