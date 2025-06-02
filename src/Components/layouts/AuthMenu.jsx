@@ -1,14 +1,14 @@
 import React from 'react';
-
 import { CiUser } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 const AuthMenu = () => {
-    const {loading, handleLogout} = useAuth();
+  const { loading, handleLogout } = useAuth();
+
   return (
     <div className="group relative z-50">
-      <Link >
+      <Link to="#">
         <CiUser className="text-2xl cursor-pointer" />
       </Link>
       <div className="hidden group-hover:block absolute right-0 pt-4">
@@ -21,9 +21,10 @@ const AuthMenu = () => {
           </li>
           <button
             className="cursor-pointer hover:text-black dark:hover:text-white text-center"
+            disabled={loading}
             onClick={handleLogout}
           >
-            {loading ? "Logging out..." : "Logout"}
+            Logout
           </button>
         </menu>
       </div>
