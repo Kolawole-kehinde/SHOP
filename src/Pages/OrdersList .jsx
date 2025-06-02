@@ -1,4 +1,3 @@
-// src/Pages/OrdersList.js
 import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useAuth } from '../hooks/useAuth';
@@ -12,16 +11,20 @@ const OrdersList = () => {
   const [cancelModal, setCancelModal] = useState({ visible: false, orderId: null });
 
   const handleCancel = async () => {
+    if (!cancelModal.orderId) {
+      console.warn('No orderId found in cancelModal');
+      return;
+    }
+
     const success = await cancelOrder(cancelModal.orderId);
     if (success) {
       setCancelModal({ visible: false, orderId: null });
-      toast.success("Order cancelled");
     }
   };
 
   const filteredOrders = showCancelled
-    ? orders
-    : orders.filter((order) => order.order_status !== 'cancelled');
+    ? orders.filter(order => order.order_status === 'cancelled')
+    : orders.filter(order => order.order_status !== 'cancelled');
 
   if (loading) return <div className="text-center py-10">Loading your orders...</div>;
   if (error) return <div className="text-center text-red-500 py-10">{error}</div>;
@@ -35,49 +38,63 @@ const OrdersList = () => {
       <div className="text-right mb-6">
         <button
           onClick={() => setShowCancelled(!showCancelled)}
-          className="text-sm text-primary"
+          className="text-base text-primary"
         >
           {showCancelled ? 'Hide cancelled orders' : 'View cancelled orders'}
         </button>
       </div>
 
       <div className="space-y-8">
-        {filteredOrders.map((order) => (
+        {filteredOrders.map(order => (
           <div key={order.id} className="bg-white shadow rounded-xl p-6 border">
             <div className="mb-4">
               <div className="flex justify-between items-center">
                 <h2 className="text-lg font-semibold text-gray-700">
                   Order ID: <span className="text-gray-900">{order.id}</span>
                 </h2>
-                {['pending', 'processing'].includes(order.order_status) && (
-                  <button
-                    onClick={() => setCancelModal({ visible: true, orderId: order.id })}
-                    className="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded transition"
-                  >
-                    Cancel Order
-                  </button>
-                )}
+
+                {!showCancelled &&
+                  ['pending', 'processing'].includes(order.order_status) && (
+                    <button
+                      onClick={() =>
+                        setCancelModal({ visible: true, orderId: order.id })
+                      }
+                      className="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition"
+                    >
+                      Cancel Order
+                    </button>
+                  )}
               </div>
               <p className="text-sm text-gray-500">Status: {order.order_status}</p>
               <p className="text-sm text-gray-500">
                 Placed on: {new Date(order.created_at).toLocaleDateString()}
               </p>
             </div>
-{order.order_items.map((item) => (
-  <div key={item.id} className="flex items-center justify-between border-t pt-4">
-    <div>
-      <h3 className="text-md font-medium text-gray-800">{item.product_name}</h3>
-      <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
-      <p className="text-sm text-gray-600">
-        Price: ${item.price.toFixed(2)}
-      </p>
-      <p className="text-sm font-semibold text-gray-700">
-        Total: ${(item.quantity * item.price).toFixed(2)}
-      </p>
-    </div>
-  </div>
-))}
 
+            {order.order_items.map(item => (
+              <div key={item.id} className="flex items-center justify-between border-t pt-4">
+                <div>
+                  <h3 className="text-md font-medium text-gray-800">
+                    {item.product_name || 'Unnamed Product'}
+                  </h3>
+                  <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
+                  <p className="text-sm text-gray-600">
+                    Price: ${Number(item.price || 0).toFixed(2)}
+                  </p>
+                  <p className="text-sm font-semibold text-gray-700">
+                    Total: ${(item.quantity * Number(item.price || 0)).toFixed(2)}
+                  </p>
+                </div>
+              </div>
+            ))}
+
+            {order.order_status === 'cancelled' && (
+              <div className="mt-4 text-right">
+                <span className="inline-block bg-red-100 text-red-600 text-xs font-semibold px-3 py-2 rounded-full">
+                  Cancelled
+                </span>
+              </div>
+            )}
           </div>
         ))}
       </div>

@@ -12,6 +12,7 @@ export const useOrders = (userId) => {
 
     const fetchOrders = async () => {
       setLoading(true);
+
       const { data, error } = await supabase
         .from('orders')
         .select(`
@@ -20,19 +21,17 @@ export const useOrders = (userId) => {
           order_status,
           order_items (
             id,
-            product_id,
-            product_name,
             quantity,
             price,
-            total_price
+            product_name
           )
         `)
         .eq('user_id', userId)
         .order('created_at', { ascending: false });
 
       if (error) {
-        setError(error.message || 'Error fetching orders');
-        console.error('Supabase fetch error:', error);
+        setError('Error fetching orders');
+        console.error(error);
       } else {
         setOrders(data || []);
       }
@@ -53,22 +52,45 @@ export const useOrders = (userId) => {
       toast.error('❌ Failed to cancel order');
       console.error(error);
       return false;
-    } else {
-      setOrders((prev) =>
-        prev.map((order) =>
-          order.id === orderId ? { ...order, order_status: 'cancelled' } : order
-        )
-      );
-      toast.success('✅ Order cancelled.');
-      return true;
     }
+
+    // Re-fetch from server to ensure sync with DB
+    const { data: updatedOrder, error: refetchError } = await supabase
+      .from('orders')
+      .select(`
+        id,
+        created_at,
+        order_status,
+        order_items (
+          id,
+          quantity,
+          price,
+          product_name
+        )
+      `)
+      .eq('id', orderId)
+      .single();
+
+    if (refetchError) {
+      console.error('Refetch error after cancellation', refetchError);
+    }
+
+    // Update local state
+    setOrders((prev) =>
+      prev.map((order) =>
+        order.id === orderId ? { ...order, order_status: 'cancelled' } : order
+      )
+    );
+
+    toast.success('✅ Order cancelled.');
+    return true;
   };
 
-  return { 
+  return {
     orders,
     loading,
     error,
-    cancelOrder,
-    setOrders
+    setOrders,
+    cancelOrder
   };
 };
