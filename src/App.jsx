@@ -12,6 +12,8 @@ import NavBar from "./Components/layouts/Navbar";
 import CartPage from "./Pages/CartPage";
 import RegistrationPage from "./Pages/Auth/Registration";
 import CheckoutPage from "./Pages/CheckoutPage";
+import ProtectedRoute from "./Components/ProtectedRoutes/ProtectedRoute";
+
 
 const App = () => {
   return (
@@ -19,19 +21,25 @@ const App = () => {
       <NavBar />
       <SearchBar />
       <Routes>
+        {/* Public Pages */}
         <Route path="/" element={<HomePage />} />
+        <Route path="shop" element={<Shop />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="contact" element={<ContactPage />} />
+        <Route path="product/:productId" element={<ProductPage />} />
 
+        {/* Auth Routes (public) */}
         <Route path="auth" element={<Outlet />}>
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegistrationPage />} />
         </Route>
 
-        <Route path="shop" element={<Shop />} />
-        <Route path="cart" element={<CartPage />} />
-        <Route path="about" element={<AboutPage />} />
-        <Route path="contact" element={<ContactPage />} />
-        <Route path="product/:productId" element={<ProductPage />} />
-        <Route path="checkout" element={<CheckoutPage />} />
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="cart" element={<CartPage />} />
+          <Route path="checkout" element={<CheckoutPage />} />
+  
+        </Route>
       </Routes>
       <Footer />
     </div>
