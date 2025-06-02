@@ -8,7 +8,10 @@ const OrderSummary = ({
   onPlaceOrder,
   isProcessing = false,
   delivery_fee = 0,
+  isFormValid = false,
 }) => {
+  const isDisabled = isProcessing || !isFormValid;
+
   return (
     <section className="w-full mt-6 h-[400px]">
       <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6">
@@ -48,10 +51,10 @@ const OrderSummary = ({
 
         <button
           onClick={onPlaceOrder}
-          disabled={isProcessing}
+          disabled={isDisabled}
           className={`mt-6 w-full text-sm py-3 rounded-xl font-medium text-white ${
-            isProcessing
-              ? "bg-primary cursor-not-allowed"
+            isDisabled
+              ? "bg-gray-300 cursor-not-allowed"
               : "bg-primary hover:bg-primary/90 transition duration-300"
           }`}
         >
