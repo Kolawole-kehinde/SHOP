@@ -1,11 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineCheck } from "react-icons/ai";
 
-const SuccessModal = ({
-  title = "Order Successful!",
-  message = "Thank you for your purchase. A confirmation email has been sent.",
-  onClose,
-}) => {
+const SuccessModal = ({ onClose }) => {
   const navigate = useNavigate();
 
   const goHome = () => {
@@ -20,31 +17,37 @@ const SuccessModal = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 text-center">
-        <h2 className="text-2xl font-bold text-green-600 mb-2">{title}</h2>
-        <p className="text-gray-600 mb-6">{message}</p>
+      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 text-center">
+        {/* Check Icon */}
+        <div className="flex justify-center mb-4">
+          <div className="bg-orange-200 rounded-full p-3">
+            <AiOutlineCheck className="text-primary w-8 h-8" />
+          </div>
+        </div>
 
+        {/* Title */}
+        <h2 className="text-xl font-semibold text-black mb-2">
+          Order Successfully Placed
+        </h2>
+
+        {/* Message */}
+        <p className="text-gray-600 mb-8">Thank You For Choosing Eshop!</p>
+
+        {/* Buttons */}
         <div className="flex justify-center gap-4">
           <button
             onClick={goHome}
-            className="px-6 py-3 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition"
+            className="text-primary font-medium hover:underline"
           >
-            Home
+            Continue shopping
           </button>
           <button
             onClick={goOrderPage}
-            className="px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition"
+            className="bg-primary text-white font-medium px-6 py-2 rounded-lg hover:bg-primary-dark transition"
           >
-            Order Page
+            Check Order
           </button>
         </div>
-
-        <button
-          onClick={onClose}
-          className="mt-4 px-6 py-3 bg-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-400 transition"
-        >
-          Close
-        </button>
       </div>
     </div>
   );
