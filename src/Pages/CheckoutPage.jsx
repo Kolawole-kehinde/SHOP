@@ -1,6 +1,5 @@
 import React, { useContext, useState, useMemo, useEffect } from "react";
 import ShippingForm from "../Components/CheckoutPage/ShippingForm";
-import SuccessModal from "../Components/ui/SuccessModal.jsx";
 import { ShopContext } from "../Context/ShopContext.jsx";
 import { CartContext } from "../Context/CartContext.jsx";
 import PaymentInputs from "../Components/CheckoutPage/PaymentInputs.jsx";
@@ -8,6 +7,9 @@ import OrderSummary from "../Components/CheckoutPage/OrderSummary.jsx";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { shippingSchema } from "../Schema/shippingSchema.js";
+import { useCreateOrder } from "../hooks/useCreateOrder.jsx";
+import SuccessModal from "../Components/ui/SuccessModal.jsx";
+
 
 const CheckoutPage = () => {
   const { products, currency = "$", delivery_fee = 0 } = useContext(ShopContext);
@@ -45,22 +47,40 @@ const CheckoutPage = () => {
   const totalQuantity = checkoutItems.reduce((acc, item) => acc + item.quantity, 0);
   const total = subtotal + delivery_fee;
 
-  const handlePayment = handleSubmit((data) => {
-    setIsProcessing(true);
-    setTimeout(() => {
-      setIsProcessing(false);
-      setOrderSuccess(true);
-    }, 3000);
+  // ✅ use mutation hook
+  const orderMutation = useCreateOrder(() => {
+    setOrderSuccess(true);
+    clearCart();
+    if (buyNowItem) clearBuyNowItem?.();
+    reset();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 
-  useEffect(() => {
-    if (orderSuccess) {
-      clearCart();
-      if (buyNowItem) clearBuyNowItem?.();
-      reset();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, [orderSuccess]);
+  // ✅ real order submit
+  const handlePayment = handleSubmit((formData) => {
+    setIsProcessing(true);
+
+    const shippingData = {
+      ...formData,
+      billingSameAsShipping,
+    };
+
+    const totals = {
+      subtotal,
+      delivery_fee,
+      total,
+    };
+
+    orderMutation.mutate({
+      shippingData,
+      items: checkoutItems,
+      paymentMethod,
+      totals,
+      // Optional: userId (if using Supabase Auth or session)
+    });
+
+    setIsProcessing(false);
+  });
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
@@ -85,7 +105,7 @@ const CheckoutPage = () => {
           quantity={totalQuantity}
           delivery_fee={delivery_fee}
           onPlaceOrder={handlePayment}
-          isProcessing={isProcessing}
+          isProcessing={isProcessing || orderMutation.isLoading}
           isFormValid={isValid}
         />
       </div>

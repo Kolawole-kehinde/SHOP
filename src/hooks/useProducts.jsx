@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '../lib/supabaseClient';
 
 
+
 export const useProducts = () => {
   return useQuery({
     queryKey: ['products'],

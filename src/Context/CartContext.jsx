@@ -9,6 +9,8 @@ export const CartContext = createContext({
   getCartCount: () => 0,
   buyNowItem: null,
   setBuyNowItem: () => {},
+  clearCart: () => {},
+  clearBuyNowItem: () => {},
 });
 
 export const CartProvider = ({ children }) => {
@@ -57,6 +59,14 @@ export const CartProvider = ({ children }) => {
     setBuyNowItem(null);
   };
 
+  const clearCart = () => {
+    setCartItems({});
+  };
+
+  const clearBuyNowItem = () => {
+    setBuyNowItem(null);
+  };
+
   const getCartCount = () =>
     Object.values(cartItems).reduce((acc, qty) => acc + qty, 0);
 
@@ -68,6 +78,8 @@ export const CartProvider = ({ children }) => {
     getCartCount,
     buyNowItem,
     setBuyNowItem,
+    clearCart,
+    clearBuyNowItem,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
