@@ -1,6 +1,8 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { supabase } from "../lib/supabaseClient";
+import toast from "react-hot-toast";
+
 
 
 const createOrder = async ({ shippingData, items, paymentMethod, totals, userId = null }) => {
@@ -25,6 +27,8 @@ const createOrder = async ({ shippingData, items, paymentMethod, totals, userId 
     product_id: item.id,
     quantity: item.quantity,
     price: item.price,
+    total_price: item.price * item.quantity,
+    product_name: item.name,
   }));
 
   const { error: itemsError } = await supabase
@@ -44,7 +48,7 @@ export const useCreateOrder = (onSuccessCallback) => {
     },
     onError: (error) => {
       console.error("Order error:", error);
-      alert("Failed to place order: " + error.message);
+      toast("Failed to place order: " + error.message);
     },
   });
 };

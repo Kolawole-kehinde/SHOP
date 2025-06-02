@@ -9,9 +9,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { shippingSchema } from "../Schema/shippingSchema.js";
 import { useCreateOrder } from "../hooks/useCreateOrder.jsx";
 import SuccessModal from "../Components/ui/SuccessModal.jsx";
+import { useAuth } from "../hooks/useAuth.jsx";
 
 
 const CheckoutPage = () => {
+  const { user } = useAuth();
+  console.log("User from context:", user);
   const { products, currency = "$", delivery_fee = 0 } = useContext(ShopContext);
   const { cartItems, buyNowItem, clearCart, clearBuyNowItem } = useContext(CartContext);
 
@@ -19,6 +22,7 @@ const CheckoutPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("credit");
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
+
 
   const {
     register,
@@ -76,7 +80,7 @@ const CheckoutPage = () => {
       items: checkoutItems,
       paymentMethod,
       totals,
-      // Optional: userId (if using Supabase Auth or session)
+      userId: user?.id,
     });
 
     setIsProcessing(false);
