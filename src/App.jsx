@@ -12,7 +12,7 @@ import NavBar from "./Components/layouts/Navbar";
 import CartPage from "./Pages/CartPage";
 import RegistrationPage from "./Pages/Auth/Registration";
 import CheckoutPage from "./Pages/CheckoutPage";
-import OrderDetails from "./Pages/OrderLists";
+import OrderDetails from "./Pages/Orders";
 
 const App = () => {
   return (
