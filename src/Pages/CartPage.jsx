@@ -2,8 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import Tittle from "../Components/Tittle";
 import { ShopContext } from "../Context/ShopContext";
 import { CartContext } from "../Context/CartContext";
-import CartItem from "../Components/cart/CartItem";
 import CartSummary from "../Components/cart/CartSummary";
+import CartItem from "../Components/cart/CartItem";
+
 
 const CartPage = () => {
   const { products, currency } = useContext(ShopContext);

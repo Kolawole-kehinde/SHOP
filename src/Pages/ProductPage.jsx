@@ -11,7 +11,7 @@ const ProductPage = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const { currency } = useContext(ShopContext);
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, setBuyNowItem } = useContext(CartContext);
 
   const { data: product, isLoading, isError, error } = useProductById(productId);
   const [quantity, setQuantity] = useState(1);
@@ -40,9 +40,12 @@ const ProductPage = () => {
           currency={currency}
           quantity={quantity}
           setQuantity={setQuantity}
-          onAddToCart={() => addToCart(product.id, quantity)}
-          onBuyNow={() => {
+          onAddToCart={() => {
             addToCart(product.id, quantity);
+            setBuyNowItem(null); // Clear buyNowItem on regular add to cart
+          }}
+          onBuyNow={() => {
+            setBuyNowItem({ ...product, quantity }); // Set buyNowItem for checkout
             navigate('/checkout');
           }}
         />

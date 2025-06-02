@@ -7,6 +7,8 @@ export const CartContext = createContext({
   updateCartItemQuantity: () => {},
   removeFromCart: () => {},
   getCartCount: () => 0,
+  buyNowItem: null,
+  setBuyNowItem: () => {},
 });
 
 export const CartProvider = ({ children }) => {
@@ -16,6 +18,8 @@ export const CartProvider = ({ children }) => {
     const storedCart = getItem("cart");
     return storedCart && typeof storedCart === "object" ? storedCart : {};
   });
+
+  const [buyNowItem, setBuyNowItem] = useState(null);
 
   // Save cart to localStorage when it changes
   useEffect(() => {
@@ -28,6 +32,7 @@ export const CartProvider = ({ children }) => {
       updated[itemId] = (updated[itemId] || 0) + quantity;
       return updated;
     });
+    setBuyNowItem(null);
   };
 
   const updateCartItemQuantity = (itemId, newQuantity) => {
@@ -40,6 +45,7 @@ export const CartProvider = ({ children }) => {
       }
       return updated;
     });
+    setBuyNowItem(null);
   };
 
   const removeFromCart = (itemId) => {
@@ -48,6 +54,7 @@ export const CartProvider = ({ children }) => {
       delete updated[itemId];
       return updated;
     });
+    setBuyNowItem(null);
   };
 
   const getCartCount = () =>
@@ -59,6 +66,8 @@ export const CartProvider = ({ children }) => {
     updateCartItemQuantity,
     removeFromCart,
     getCartCount,
+    buyNowItem,
+    setBuyNowItem,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

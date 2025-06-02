@@ -1,22 +1,20 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useMemo, useEffect } from "react";
 import ShippingForm from "../Components/CheckoutPage/ShippingForm";
-import PaymentInputs from "../Components/CheckoutPage/PaymentInputs.jsx.jsx";
-import OrderSummary from "../Components/CheckoutPage/OrderSummary.jsx";
-import SuccessModal from "../Components/modal/SuccessModal.jsx";
+import SuccessModal from "../Components/ui/SuccessModal.jsx";
 import { ShopContext } from "../Context/ShopContext.jsx";
 import { CartContext } from "../Context/CartContext.jsx";
-
+import PaymentInputs from "../Components/CheckoutPage/PaymentInputs.jsx";
+import OrderSummary from "../Components/CheckoutPage/OrderSummary.jsx";
 
 const CheckoutPage = () => {
-  const { products, currency, delivery_fee } = useContext(ShopContext);
-  const { cartItems } = useContext(CartContext);
+  const { products, currency = "$", delivery_fee = 0 } = useContext(ShopContext);
+  const { cartItems, buyNowItem } = useContext(CartContext);
 
   const [billingSameAsShipping, setBillingSameAsShipping] = useState(true);
   const [paymentMethod, setPaymentMethod] = useState("credit");
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
 
-  // Initialize formData with all empty fields to avoid undefined errors
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -27,23 +25,39 @@ const CheckoutPage = () => {
     deliveryNotes: "",
   });
 
-  const cartProductList = Object.entries(cartItems).map(([id, quantity]) => {
-    const product = products.find((p) => p.id === parseInt(id));
-    return { ...product, quantity };
-  });
+  // Calculate checkout items from context cartItems or buyNowItem
+  const checkoutItems = useMemo(() => {
+    if (buyNowItem) {
+      const product = products.find((p) => p.id === buyNowItem.id);
+      if (!product) return [];
+      return [{ ...product, quantity: buyNowItem.quantity || 1 }];
+    }
+    return Object.entries(cartItems)
+      .map(([id, quantity]) => {
+        const product = products.find((p) => p.id === parseInt(id));
+        return product ? { ...product, quantity } : null;
+      })
+      .filter(Boolean);
+  }, [buyNowItem, cartItems, products]);
 
-  const subtotal = cartProductList.reduce(
+  // Calculate subtotal and quantity
+  const subtotal = checkoutItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+  const totalQuantity = checkoutItems.reduce((acc, item) => acc + item.quantity, 0);
+
+  // Calculate total with delivery fee
   const total = subtotal + delivery_fee;
 
-  // Calculate total quantity
-  const totalQuantity = cartProductList.reduce((acc, item) => acc + item.quantity, 0);
+  // Debug logs to verify values update on checkout page
+  useEffect(() => {
+    console.log("Checkout Items:", checkoutItems);
+    console.log("Subtotal:", subtotal);
+    console.log("Total Quantity:", totalQuantity);
+  }, [checkoutItems, subtotal, totalQuantity]);
 
   const handlePayment = () => {
-    // Here you can validate form data before processing, e.g. check required fields
-
     setIsProcessing(true);
     setTimeout(() => {
       setIsProcessing(false);
@@ -66,10 +80,7 @@ const CheckoutPage = () => {
             formData={formData}
             setFormData={setFormData}
           />
-          <PaymentInputs
-            paymentMethod={paymentMethod}
-            setPaymentMethod={setPaymentMethod}
-          />
+          <PaymentInputs paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
         </div>
 
         {/* Right side - order summary */}
@@ -78,6 +89,7 @@ const CheckoutPage = () => {
           total={total}
           currency={currency}
           quantity={totalQuantity}
+          delivery_fee={delivery_fee}
           onPlaceOrder={handlePayment}
           isProcessing={isProcessing}
         />

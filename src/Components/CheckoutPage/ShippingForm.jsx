@@ -1,73 +1,96 @@
-const ShippingForm = ({ 
-  billingSameAsShipping, 
-  setBillingSameAsShipping, 
-  formData, 
-  setFormData 
-}) => {
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { shippingSchema } from "../../Schema/shippingSchema";
+
+const ShippingForm = ({ billingSameAsShipping, setBillingSameAsShipping }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(shippingSchema),
+  });
+
+  const onSubmit = (data) => {
+    console.log("Valid data:", data);
   };
 
   return (
     <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-8">
       <h3 className="text-2xl font-semibold mb-6 text-gray-700">Shipping Details</h3>
-      <form className="grid sm:grid-cols-2 gap-5 text-sm" onSubmit={e => e.preventDefault()}>
-        <input
-          name="fullName"
-          type="text"
-          placeholder="Full Name"
-          className="input"
-          value={formData.fullName}
-          onChange={handleChange}
-        />
-        <input
-          name="email"
-          type="email"
-          placeholder="Email Address"
-          className="input"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <input
-          name="phone"
-          type="text"
-          placeholder="Phone Number"
-          className="input"
-          value={formData.phone}
-          onChange={handleChange}
-        />
-        <input
-          name="streetAddress"
-          type="text"
-          placeholder="Street Address"
-          className="input sm:col-span-2"
-          value={formData.streetAddress}
-          onChange={handleChange}
-        />
-        <input
-          name="city"
-          type="text"
-          placeholder="City"
-          className="input"
-          value={formData.city}
-          onChange={handleChange}
-        />
-        <input
-          name="postalCode"
-          type="text"
-          placeholder="Postal Code"
-          className="input"
-          value={formData.postalCode}
-          onChange={handleChange}
-        />
-        <textarea
-          name="deliveryNotes"
-          placeholder="Delivery Notes (optional)"
-          className="input sm:col-span-2 h-24 resize-none"
-          value={formData.deliveryNotes}
-          onChange={handleChange}
-        />
+      
+      <form onSubmit={handleSubmit(onSubmit)} className="grid sm:grid-cols-2 gap-5 text-sm">
+        <div>
+          <input
+            {...register("fullName")}
+            type="text"
+            placeholder="Full Name"
+            className="input"
+          />
+          {errors.fullName && <p className="text-red-500 text-xs">{errors.fullName.message}</p>}
+        </div>
+
+        <div>
+          <input
+            {...register("email")}
+            type="email"
+            placeholder="Email Address"
+            className="input"
+          />
+          {errors.email && <p className="text-red-500 text-xs">{errors.email.message}</p>}
+        </div>
+
+        <div>
+          <input
+            {...register("phone")}
+            type="text"
+            placeholder="Phone Number"
+            className="input"
+          />
+          {errors.phone && <p className="text-red-500 text-xs">{errors.phone.message}</p>}
+        </div>
+
+        <div className="sm:col-span-2">
+          <input
+            {...register("streetAddress")}
+            type="text"
+            placeholder="Street Address"
+            className="input"
+          />
+          {errors.streetAddress && (
+            <p className="text-red-500 text-xs">{errors.streetAddress.message}</p>
+          )}
+        </div>
+
+        <div>
+          <input
+            {...register("city")}
+            type="text"
+            placeholder="City"
+            className="input"
+          />
+          {errors.city && <p className="text-red-500 text-xs">{errors.city.message}</p>}
+        </div>
+
+        <div>
+          <input
+            {...register("postalCode")}
+            type="text"
+            placeholder="Postal Code"
+            className="input"
+          />
+          {errors.postalCode && (
+            <p className="text-red-500 text-xs">{errors.postalCode.message}</p>
+          )}
+        </div>
+
+        <div className="sm:col-span-2">
+          <textarea
+            {...register("deliveryNotes")}
+            placeholder="Delivery Notes (optional)"
+            className="input h-24 resize-none"
+          />
+        </div>
       </form>
 
       <label className="inline-flex items-center space-x-2 text-sm text-gray-600 mt-6">
