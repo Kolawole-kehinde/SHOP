@@ -15,6 +15,9 @@ import CheckoutPage from "./Pages/CheckoutPage";
 import ProtectedRoute from "./Components/ProtectedRoutes/ProtectedRoute";
 import OrdersList from "./Pages/OrdersList ";
 import OrderDetails from "./Pages/OrderDetails";
+import ProfilePage from "./Pages/ProfilePage";
+import EditProfile from "./Pages/editPage";
+
 
 
 const App = () => {
@@ -29,6 +32,8 @@ const App = () => {
         <Route path="about" element={<AboutPage />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="product/:productId" element={<ProductPage />} />
+        <Route path="profile" element={<ProfilePage />} />
+        <Route path="edit-profile" element={<EditProfile />} />
 
         {/* Auth Routes (public) */}
         <Route path="auth" element={<Outlet />}>

@@ -49,7 +49,7 @@ export const useOrders = (userId) => {
       .eq('id', orderId);
 
     if (error) {
-      toast.error('❌ Failed to cancel order');
+      toast.error('Failed to cancel order');
       console.error(error);
       return false;
     }
