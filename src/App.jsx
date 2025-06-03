@@ -18,6 +18,7 @@ import OrderDetails from "./Pages/OrderDetails";
 import ProfilePage from "./Pages/ProfilePage";
 import EditProfile from "./Pages/editPage";
 import AccountSettings from "./Pages/AccountSettings";
+import ChangePassword from "./Pages/ChangePassword";
 
 
 
@@ -36,6 +37,7 @@ const App = () => {
         <Route path="profile" element={<ProfilePage />} />
         <Route path="edit-profile" element={<EditProfile />} />
         <Route path="settings" element={<AccountSettings />} />
+        <Route path="/change-password" element={<ChangePassword />} />
 
         {/* Auth Routes (public) */}
         <Route path="auth" element={<Outlet />}>

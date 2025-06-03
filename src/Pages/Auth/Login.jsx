@@ -7,9 +7,9 @@ import toast from "react-hot-toast";
 import { loginLists } from "../../constant/auth";
 import CustomInput from "../../Components/CustomInput";
 import AuthLayout from "../../Components/layouts/AuthLayout";
-import { loginSchema } from "../../Schema/authSchema";
 import { useAuth } from "../../hooks/useAuth";
 import { signInApi } from "../../services/auth";
+import { loginSchema } from "../../Schema/authSchema";
 
 const defaultValues = {
   email: "",
@@ -58,12 +58,6 @@ const LoginPage = () => {
       subtext="Register"
       textLink="/auth/register"
     >
-      {/* Show validation errors (debug) */}
-      {Object.keys(errors).length > 0 && (
-        <div className="text-red-500 bg-red-100 p-2 rounded">
-          Validation Errors: {JSON.stringify(errors)}
-        </div>
-      )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {loginLists.map(({ label, type, name, placeholder }) => (
