@@ -82,7 +82,7 @@ export const useOrders = (userId) => {
       )
     );
 
-    toast.success('✅ Order cancelled.');
+    toast.success('Order cancelled.');
     return true;
   };
 

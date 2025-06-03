@@ -17,6 +17,7 @@ import OrdersList from "./Pages/OrdersList ";
 import OrderDetails from "./Pages/OrderDetails";
 import ProfilePage from "./Pages/ProfilePage";
 import EditProfile from "./Pages/editPage";
+import AccountSettings from "./Pages/AccountSettings";
 
 
 
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="product/:productId" element={<ProductPage />} />
         <Route path="profile" element={<ProfilePage />} />
         <Route path="edit-profile" element={<EditProfile />} />
+        <Route path="settings" element={<AccountSettings />} />
 
         {/* Auth Routes (public) */}
         <Route path="auth" element={<Outlet />}>
