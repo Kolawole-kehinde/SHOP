@@ -12,12 +12,12 @@ import Subscribe from '../Components/Subscribe'
 
 
 const HomePage = () => {
-  const [categoryFilter, setCategoryFilter] = useState([]);
+
   return (
     <div>
-      <Hero onCategorySelect={setCategoryFilter} />
-      <Category1 categoryFilter={categoryFilter} />
-      <Category2 categoryFilter={categoryFilter} />
+      <Hero  />
+      <Category1 />
+      <Category2 />
       <OurPolicy />
       <Banner />
       <LatestCollection />
