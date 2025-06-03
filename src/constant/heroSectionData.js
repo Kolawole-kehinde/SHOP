@@ -5,8 +5,7 @@ export const HeroData = [
     subtitle: "Beat Solo",
     title: "Wireless",
     title2: "Headphone",
-    Description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam non itaque dignissimos repellendus placeat. Autem voluptate quibusdam ab quisquam aut?",
+   category: "Headphone",
   },
   {
     id: 2,
@@ -14,8 +13,7 @@ export const HeroData = [
     subtitle: "Next-Gen Play",
     title: "Wireless",
     title2: "Virtual",
-    Description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam non itaque dignissimos repellendus placeat. Autem voluptate quibusdam ab quisquam aut?",
+    category: "Gaming",
   },
   {
     id: 3,
@@ -23,7 +21,6 @@ export const HeroData = [
     subtitle: "Branded",
     title: "Laptops",
     title2: "Laptops",
-    Description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam non itaque dignissimos repellendus placeat. Autem voluptate quibusdam ab quisquam aut?",
+    category: "Laptop",
   },
 ];

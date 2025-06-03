@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Hero from '../Components/Hero'
 import Category1 from '../Components/Category1'
 import Category2 from '../Components/Category2'
@@ -12,17 +12,18 @@ import Subscribe from '../Components/Subscribe'
 
 
 const HomePage = () => {
+  const [categoryFilter, setCategoryFilter] = useState([]);
   return (
     <div>
-      <Hero />
-      <Category1/>
-      <Category2/>
-      <OurPolicy/>
-      <Banner/>
-      <LatestCollection/>
-      <BestSellers/>
-      <Banner2/>
-      <Subscribe/>
+      <Hero onCategorySelect={setCategoryFilter} />
+      <Category1 categoryFilter={categoryFilter} />
+      <Category2 categoryFilter={categoryFilter} />
+      <OurPolicy />
+      <Banner />
+      <LatestCollection />
+      <BestSellers />
+      <Banner2 />
+      <Subscribe />
       {/* <RegisrationPage/> */}
      
 

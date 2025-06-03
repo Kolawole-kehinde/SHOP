@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 const Category2 = () => {
@@ -15,9 +16,11 @@ const Category2 = () => {
                 <p className='mb-1 text-gray-400'>Enjoy</p>
                 <p className='text-2xl font-semibold mb-2'>With</p>
                 <p className='text-5xl xl:text-6xl font-bold opacity-20 mb-2'>Laptop</p>
-                <button className='bg-white text-primary py-2 px-8 cursor-pointer hover:scale-105 duration-300 rounded-full relative z-10'>
+              <Link to="/shop">
+                   <button className='bg-white text-primary py-2 px-8 cursor-pointer hover:scale-105 duration-300 rounded-full relative z-10'>
                   Browse
                 </button>
+              </Link>
               </div>
             </div>
             <img src="images/gaming.png" alt="gaming" className='w-[300px] absolute top-1/2 -translate-y-1/2 right-0' />
@@ -30,9 +33,11 @@ const Category2 = () => {
                 <p className='mb-1 text-white'>Enjoy</p>
                 <p className='text-2xl font-semibold mb-2'>With</p>
                 <p className='text-5xl xl:text-6xl font-bold opacity-20 mb-2'>Gadget</p>
-                <button className='bg-white text-brandGreen py-2 px-8 cursor-pointer hover:scale-105 duration-300 rounded-full relative z-10'>
-                  Browse
-                </button>
+                <Link to="/shop">
+                  <button className='bg-white text-brandGreen py-2 px-8 cursor-pointer hover:scale-105 duration-300 rounded-full relative z-10'>
+                    Browse
+                  </button>
+                </Link>
               </div>
             </div>
             <img src="images/vr.png" alt="vr" className='w-[320px] absolute bottom-0 sm:right-1' />
@@ -45,9 +50,11 @@ const Category2 = () => {
                 <p className='mb-1 text-white'>Enjoy</p>
                 <p className='text-2xl font-semibold mb-2'>With</p>
                 <p className='text-5xl xl:text-6xl font-bold opacity-20 mb-2'>Speaker</p>
-                <button className='bg-red-600 py-2 px-8 cursor-pointer hover:scale-105 duration-300 rounded-full relative z-10'>
-                  Browse
-                </button>
+                <Link to="/shop">
+                  <button className='bg-red-600 py-2 px-8 cursor-pointer hover:scale-105 duration-300 rounded-full relative z-10'>
+                    Browse
+                  </button>
+                </Link>
               </div>
             </div>
             <img src="images/speaker.png" alt="speaker" className='w-[250px] sm:w-[250px] bottom-0 right-0 absolute' />
