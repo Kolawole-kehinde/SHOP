@@ -4,6 +4,7 @@ import Tittle from "../Components/Tittle";
 import ProductItem from "../Components/ProductItem";
 import SearchBar from "../Components/SearchBar";
 import { useProducts } from "../hooks/useProducts";
+import SkeletonCard from "../Components/SkeletonCard";
 
 const Shop = () => {
   const { data: products = [], isLoading, isError, error } = useProducts();
@@ -11,19 +12,18 @@ const Shop = () => {
   const [filterProducts, setFilterProducts] = useState([]);
   const [category, setCategory] = useState([]);
   const [sortType, setSortType] = useState("relevant");
-  
-  // For search & showSearch states, manage here or from context
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
 
   const toggleCategory = (e) => {
     const value = e.target.value;
     setCategory((prev) =>
-      prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
+      prev.includes(value)
+        ? prev.filter((item) => item !== value)
+        : [...prev, value]
     );
   };
 
-  // Filter & sort products based on inputs
   useEffect(() => {
     let filtered = [...products];
 
@@ -46,12 +46,8 @@ const Shop = () => {
     setFilterProducts(filtered);
   }, [products, category, sortType, search, showSearch]);
 
-  if (isLoading) return <p className="text-center mt-8">Loading products...</p>;
-  if (isError) return <p className="text-center mt-8 text-red-500">Error: {error.message}</p>;
-
   return (
     <section>
-      {/* Render SearchBar, passing required props */}
       <SearchBar
         search={search}
         setSearch={setSearch}
@@ -68,18 +64,31 @@ const Shop = () => {
           >
             FILTER
             <RiArrowDropDownLine
-              className={`h-6 lg:hidden transition-transform ${showFilter ? "rotate-90" : ""}`}
+              className={`h-6 lg:hidden transition-transform ${
+                showFilter ? "rotate-90" : ""
+              }`}
             />
           </p>
-          <div className={`border border-gray-300 pl-5 py-3 mt-6 ${showFilter ? "" : "hidden"} lg:block`}>
+          <div
+            className={`border border-gray-300 pl-5 py-3 mt-6 ${
+              showFilter ? "" : "hidden"
+            } lg:block`}
+          >
             <p className="mb-3 text-sm font-medium">CATEGORIES</p>
             <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
-              {["Laptop", "Speaker", "Watch", "Gaming", "Headphone"].map((cat) => (
-                <label key={cat} className="flex gap-2 capitalize">
-                  <input type="checkbox" value={cat} onChange={toggleCategory} className="w-3" />
-                  {cat}
-                </label>
-              ))}
+              {["Laptop", "Speaker", "Watch", "Gaming", "Headphone"].map(
+                (cat) => (
+                  <label key={cat} className="flex gap-2 capitalize">
+                    <input
+                      type="checkbox"
+                      value={cat}
+                      onChange={toggleCategory}
+                      className="w-3"
+                    />
+                    {cat}
+                  </label>
+                )
+              )}
             </div>
           </div>
         </div>
@@ -103,16 +112,26 @@ const Shop = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 gap-y-6">
-            {filterProducts.map((item) => (
-              <ProductItem
-                key={item.id}
-                id={item.id}
-                images={item.images} // Pass images array here
-                name={item.name}
-                price={item.price}
-              />
-            ))}
+            {isLoading
+              ? Array.from({ length: 8 }).map((_, idx) => (
+                  <SkeletonCard key={idx} />
+                ))
+              : filterProducts.map((item) => (
+                  <ProductItem
+                    key={item.id}
+                    id={item.id}
+                    images={item.images}
+                    name={item.name}
+                    price={item.price}
+                  />
+                ))}
           </div>
+
+          {isError && (
+            <p className="text-center mt-8 text-red-500">
+              Error: {error.message}
+            </p>
+          )}
         </div>
       </div>
     </section>
