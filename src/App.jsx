@@ -3,7 +3,6 @@ import { Route, Routes, Outlet } from "react-router-dom";
 import HomePage from "./Pages/Home";
 import LoginPage from "./Pages/Auth/Login";
 import Shop from "./Pages/Shop";
-import ContactPage from "./Pages/Contact";
 import ProductPage from "./Pages/ProductPage";
 import SearchBar from "./Components/SearchBar";
 import Footer from "./Components/layouts/Footer";
@@ -19,6 +18,7 @@ import EditProfile from "./Pages/editPage";
 import AccountSettings from "./Pages/AccountSettings";
 import ChangePassword from "./Pages/ChangePassword";
 import AboutUs from "./Pages/About";
+import Contact from "./Pages/Contact";
 
 
 
@@ -32,7 +32,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="shop" element={<Shop />} />
         <Route path="about" element={<AboutUs />} />
-        <Route path="contact" element={<ContactPage />} />
+        <Route path="contact" element={<Contact />} />
         <Route path="product/:productId" element={<ProductPage />} />
         <Route path="profile" element={<ProfilePage />} />
         <Route path="edit-profile" element={<EditProfile />} />
