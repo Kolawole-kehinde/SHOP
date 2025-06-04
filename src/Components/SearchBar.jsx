@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { CiSearch } from "react-icons/ci";
 import { RxCross2 } from "react-icons/rx";
 import { useLocation } from 'react-router-dom';

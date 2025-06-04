@@ -3,10 +3,12 @@ import { CiSearch} from 'react-icons/ci';
 import { IoCartOutline } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
 import { CartContext } from '../../Context/CartContext';
+import { ShopContext } from '../../Context/ShopContext';
 
 
 const NavRight = () => {
-  const { setShowSearch, getCartCount } = useContext(CartContext);
+  const {  getCartCount } = useContext(CartContext);
+  const { setShowSearch } = useContext(ShopContext);
   const navigate = useNavigate();
 
   const handleSearchClick = () => {

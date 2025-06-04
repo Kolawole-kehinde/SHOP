@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Tittle from "../Components/Tittle";
 import ProductItem from "../Components/ProductItem";
 import SearchBar from "../Components/SearchBar";
-import { useProducts } from "../hooks/useProducts";
 import SkeletonCard from "../Components/SkeletonCard";
+import { ShopContext } from "../Context/ShopContext";
+import { useProducts } from "../hooks/useProducts";
 
 const Shop = () => {
+  const { search, setSearch, showSearch, setShowSearch } = useContext(ShopContext);
+
   const { data: products = [], isLoading, isError, error } = useProducts();
   const [showFilter, setShowFilter] = useState(false);
   const [filterProducts, setFilterProducts] = useState([]);
   const [category, setCategory] = useState([]);
   const [sortType, setSortType] = useState("relevant");
-  const [search, setSearch] = useState("");
-  const [showSearch, setShowSearch] = useState(false);
 
   const toggleCategory = (e) => {
     const value = e.target.value;
@@ -103,6 +104,7 @@ const Shop = () => {
               <select
                 onChange={(e) => setSortType(e.target.value)}
                 className="border-2 border-gray-300 text-sm px-2 py-2 h-10"
+                value={sortType}
               >
                 <option value="relevant">Sort By: Relevant</option>
                 <option value="low-high">Sort By: Low to High</option>
