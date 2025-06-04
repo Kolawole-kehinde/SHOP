@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Logo from './Logo';
 
 const Footer = () => {
   return (
@@ -7,7 +8,7 @@ const Footer = () => {
 
         {/* First column */}
         <div>
-          <a href="/" className='text-3xl sm:text-4xl text-red-600 tracking-wide'>EShop</a>
+         <Logo/>
           <p className='w-full md:w-2/3 text-gray-600 pt-5 text-xl'>
             Lorem Ipsum is dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
           </p>
