@@ -46,7 +46,7 @@ const Banner = () => {
               delay="0s"
             >
               <div className="flex flex-col items-center md:items-start p-6 sm:p-8">
-                <p className="text-sm">30%</p>
+                <p className="text-sm text-red-500 font-bold">30%</p>
                 <h1 className="text-4xl uppercase lg:text-7xl font-bold">Fine Smile</h1>
                 <p>10 Jan to 28 Jan</p>
               </div>
